@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicStore.StepProgressBarFeatures"
+             xmlns:model="clr-namespace:MusicStore"
+             xmlns:stepProgressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar">
+    <ContentPage.BindingContext>
+        <model:StepProgressBarViewModel/>
+    </ContentPage.BindingContext>
+    
+    <stepProgressBar:SfStepProgressBar x:Name="StepProgressBar" Orientation="Horizontal"
+									   HorizontalOptions="Center" 
+									   VerticalOptions="Center"
+                                       StepContentSize="12"
+                                       ActiveStepIndex="2"
+                                       LabelSpacing="10"
+                                       ActiveStepProgressValue="50"
+                                       ItemsSource="{Binding StepDetails}">
+        <stepProgressBar:SfStepProgressBar.CompletedStepSettings>
+            <stepProgressBar:StepSettings ContentFillColor="White" ShapeType="Circle" ContentType="Cross"  Background = "#ff67579c" Stroke = "MediumPurple" ProgressColor = "Orange">
+                <stepProgressBar:StepSettings.TextStyle>
+                    <stepProgressBar:StepTextStyle TextColor="CadetBlue" FontAttributes="Bold"/>
+                </stepProgressBar:StepSettings.TextStyle>
+            </stepProgressBar:StepSettings>
+        </stepProgressBar:SfStepProgressBar.CompletedStepSettings>
+        <stepProgressBar:SfStepProgressBar.InProgressStepSettings>
+            <stepProgressBar:StepSettings ContentFillColor="White" ShapeType="Circle" ContentType="Cross"  Background = "#ff67579c" Stroke = "MediumPurple" ProgressColor = "Orange">
+                <stepProgressBar:StepSettings.TextStyle>
+                    <stepProgressBar:StepTextStyle TextColor="CadetBlue" FontAttributes="Bold"/>
+                </stepProgressBar:StepSettings.TextStyle>
+            </stepProgressBar:StepSettings>
+        </stepProgressBar:SfStepProgressBar.InProgressStepSettings>
+        <stepProgressBar:SfStepProgressBar.NotStartedStepSettings>
+            <stepProgressBar:StepSettings ContentFillColor="White" ShapeType="Circle" ContentType="Cross"  Background = "#ff67579c" Stroke = "MediumPurple" ProgressColor = "Orange">
+                <stepProgressBar:StepSettings.TextStyle>
+                    <stepProgressBar:StepTextStyle TextColor="CadetBlue" FontAttributes="Bold"/>
+                </stepProgressBar:StepSettings.TextStyle>
+            </stepProgressBar:StepSettings>
+        </stepProgressBar:SfStepProgressBar.NotStartedStepSettings>
+    </stepProgressBar:SfStepProgressBar>
+</ContentPage>

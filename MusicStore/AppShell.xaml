@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MusicStore.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MusicStore"
+    xmlns:froms="clr-namespace:MusicStore.Views.Forms"
+    Shell.FlyoutBehavior="Flyout"
+    WidthRequest="400"
+    >
+
+    
+
+<ShellContent Title = "login" ContentTemplate = "{DataTemplate froms:Login}" Route ="CheckBoxFeatures" /> 
+<ShellContent Title = "CheckBox" ContentTemplate = "{DataTemplate local:CheckBoxFeatures}" Route ="CheckBoxFeatures" /> 
+<ShellContent Title = "Cards" ContentTemplate = "{DataTemplate local:CardsFeatures}" Route ="CardsFeatures" /> 
+<ShellContent Title = "ListView" ContentTemplate = "{DataTemplate local:ListViewFeatures}" Route ="ListViewFeatures" /> 
+<ShellContent Title = "Step Progress Bar" ContentTemplate = "{DataTemplate local:StepProgressBarFeatures}" Route ="StepProgressBarFeatures" /> 
+<ShellContent Title = "Avatar View" ContentTemplate = "{DataTemplate local:AvatarViewFeatures}" Route ="AvatarViewFeatures" /> 
+<ShellContent Title = "Button" ContentTemplate = "{DataTemplate local:ButtonFeatures}" Route ="ButtonFeatures" /> 
+
+
+</Shell>

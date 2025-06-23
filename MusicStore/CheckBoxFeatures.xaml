@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             Title="CheckBox"
+             x:Class="MusicStore.CheckBoxFeatures" >
+    <ContentPage.Content>
+        <Grid RowDefinitions="auto" ColumnDefinitions="auto" HorizontalOptions="Center" VerticalOptions="Center">
+            <buttons:SfCheckBox Text="SfCheckBox" x:Name="sfCheckBox"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

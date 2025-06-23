@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards" x:Class="MusicStore.CardsFeatures">
+    <ContentPage.Content>
+        <cards:SfCardLayout>
+            <cards:SfCardView BackgroundColor="#fa6e67">
+                <Label Text="Bittersweet"/>
+            </cards:SfCardView>
+            <cards:SfCardView BackgroundColor="#f6f27b">
+                <Label Text="Mindaro"/>
+            </cards:SfCardView>
+            <cards:SfCardView BackgroundColor="#7bb955">
+                <Label Text="Mantis"/>
+            </cards:SfCardView>            
+        </cards:SfCardLayout>
+    </ContentPage.Content>
+</ContentPage>

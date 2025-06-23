@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MusicStore" Title="ListView"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             x:Class="MusicStore.ListViewFeatures">
+    <ContentPage.BindingContext>
+        <local:ListViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+    <syncfusion:SfListView x:Name="listView"
+                        SelectionMode="Single"
+                           ItemsSource="{Binding Contacts}"
+                           IsStickyHeader="True"
+			         HeaderSize="45"
+                           IsStickyFooter="True"
+			         FooterSize="45" >
+        <syncfusion:SfListView.HeaderTemplate>
+            <DataTemplate>
+                <Grid Background="#4CA1FE">
+                    <Label Text="Contacts List" 
+                           FontAttributes="Bold" 
+                           TextColor="White"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+        </syncfusion:SfListView.HeaderTemplate>
+        <syncfusion:SfListView.FooterTemplate>
+            <DataTemplate>
+                <Grid Background="#4CA1FE">
+                    <Label Text="Syncfusion | All rights reserved" 
+                           FontAttributes="Bold" 
+                           TextColor="White"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+        </syncfusion:SfListView.FooterTemplate>
+        <syncfusion:SfListView.ItemsLayout>
+            <syncfusion:GridLayout SpanCount="2"/>
+        </syncfusion:SfListView.ItemsLayout>
+        <syncfusion:SfListView.ItemTemplate>
+            <DataTemplate>
+                <Label Text="{Binding ContactName}"/>
+            </DataTemplate>
+        </syncfusion:SfListView.ItemTemplate>
+    </syncfusion:SfListView>
+</ContentPage>
