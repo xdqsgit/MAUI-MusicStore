@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>MusicStore</ApplicationTitle>
+		<ApplicationTitle>MAUI MusicStore</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.MusicStore</ApplicationId>
@@ -43,10 +43,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg"  TintColor="Yellow"  Color="#112BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#A8EDEA" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

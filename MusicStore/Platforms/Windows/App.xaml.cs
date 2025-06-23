@@ -34,8 +34,7 @@ namespace MusicStore.WinUI
             var windowId = Win32Interop.GetWindowIdFromWindow(_windowHandle);
 
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
-            appWindow.Resize(new SizeInt32(350, 600));
+            appWindow.Resize(new SizeInt32(600, 900));
         }
     }
-
 }

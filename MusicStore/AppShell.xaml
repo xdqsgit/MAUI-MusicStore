@@ -4,11 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MusicStore"
+    xmlns:controls="clr-namespace:MusicStore.Controls"
+    
     xmlns:froms="clr-namespace:MusicStore.Views.Forms"
     Shell.FlyoutBehavior="Flyout"
     WidthRequest="400"
     >
-
+    <Shell.FlyoutHeader>
+        <controls:FlyoutHeader></controls:FlyoutHeader>
+    </Shell.FlyoutHeader>
     
 
 <ShellContent Title = "login" ContentTemplate = "{DataTemplate froms:Login}" Route ="CheckBoxFeatures" /> 

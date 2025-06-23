@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:vm="clr-namespace:MusicStore.ViewModel"
+             x:Class="MusicStore.Controls.FlyoutHeader">
+    <VerticalStackLayout Padding="20">
+        <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween">
+            <Button ImageSource="dark_theme.png" Command="{Binding ChangeThemeCommand}"></Button>
+
+            <VerticalStackLayout>
+
+                <sfavatar:SfAvatarView ContentType="Custom"
+                                       ImageSource="avatar.png"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"   
+                                       HeightRequest="50"
+                                       CornerRadius="25"
+                                       WidthRequest="50" 
+                                       Stroke="Black"
+                                       StrokeThickness="1"/>
+
+                <Label Text="用户名"></Label>
+            </VerticalStackLayout>
+
+            <Button Text="扫一扫"></Button>
+        </FlexLayout>
+
+        <Grid BackgroundColor="AliceBlue" Padding="5" >
+            <Image Source="header_lv.png" Aspect="AspectFill"></Image>
+            <FlexLayout Direction="Column" JustifyContent="SpaceBetween" >
+
+                <Label Text="等级中心"></Label>
+                <FlexLayout JustifyContent="SpaceBetween">
+                    <Label Text="LV: 9"></Label>
+                    <Label Text="下一级还需经验: 129"></Label>
+                </FlexLayout>
+                <ProgressBar Progress="0.8" />
+            </FlexLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentView>
