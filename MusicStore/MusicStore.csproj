@@ -43,7 +43,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg"  TintColor="Yellow"  Color="#112BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" TintColor="Yellow" Color="#112BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#A8EDEA" />
@@ -75,6 +75,7 @@
 	   <PackageReference Include="Syncfusion.Maui.ListView" Version="29.2.11" />
 	   <PackageReference Include="Syncfusion.Maui.ProgressBar" Version="29.2.11" />
 	   <PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.5" />
+	   <PackageReference Include="Syncfusion.Xamarin.SfCarousel" Version="29.2.11" />
 	 </ItemGroup>
 	
 	 <ItemGroup>
