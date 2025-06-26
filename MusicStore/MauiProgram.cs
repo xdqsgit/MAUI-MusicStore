@@ -11,9 +11,9 @@ namespace MusicStore
         {
             var builder = MauiApp.CreateBuilder();
             builder
-				.ConfigureSyncfusionToolkit()
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+				.ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {

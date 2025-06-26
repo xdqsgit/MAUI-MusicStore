@@ -1,10 +1,12 @@
-﻿namespace MusicStore
+﻿using MusicStore.ViewModel;
+
+namespace MusicStore
 {
     public partial class MainPage : ContentPage
     {
 
         public MainPage()
-        {
+        {            
             InitializeComponent();
         }
     }

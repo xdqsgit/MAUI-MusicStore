@@ -1,5 +1,5 @@
 using MusicStore.Common;
-using MusicStore.Views.Forms;
+using MusicStore.Views;
 using Syncfusion.Maui.DataForm;
 using Syncfusion.Maui.Toolkit.Buttons;
 

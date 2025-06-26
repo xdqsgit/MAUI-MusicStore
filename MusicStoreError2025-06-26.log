@@ -1,0 +1,36 @@
+
+
+Date:2025-06-26 09:19:19,398
+Thread:[1]
+Level:ERROR
+Logger:Syncfusion.Maui.UI.WizardImplementation                         [(null)]
+Message:NuGet.PackageManagement.PackageReferenceRollbackException: 程序包还原失败。正在回滚“MusicStore”的程序包更改。
+   在 NuGet.PackageManagement.NuGetPackageManager.<ExecuteBuildIntegratedProjectActionsAsync>d__93.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   在 NuGet.PackageManagement.NuGetPackageManager.<ExecuteNuGetProjectActionsAsync>d__87.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   在 NuGet.PackageManagement.NuGetPackageManager.<InstallPackageAsync>d__53.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   在 NuGet.PackageManagement.NuGetPackageManager.<InstallPackageAsync>d__52.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   在 NuGet.VisualStudio.Implementation.Extensibility.VsPackageInstaller.<InstallInternalCoreAsync>d__28.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 NuGet.VisualStudio.Implementation.Extensibility.VsPackageInstaller.<InstallInternalAsync>d__27.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 NuGet.VisualStudio.Implementation.Extensibility.VsPackageInstaller.<InstallInternalAsync>d__27.MoveNext()
+--- 引发异常的上一位置中堆栈跟踪的末尾 ---
+   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   在 Microsoft.VisualStudio.Threading.JoinableTask.CompleteOnCurrentThread()
+   在 NuGet.VisualStudio.Implementation.Extensibility.VsPackageInstaller.InstallPackage(String source, Project project, String packageId, String version, Boolean ignoreDependencies)
+   在 Syncfusion.Maui.UI.WizardImplementation.NugetPackageInstallation(Project project, String package, String version) 位置 D:\Repo\vsext_maui-item-template\Syncfusion.Maui.UI\WizardImplementation.cs:行号 465

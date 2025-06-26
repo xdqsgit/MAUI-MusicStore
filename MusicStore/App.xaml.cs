@@ -1,4 +1,3 @@
-using MusicStore.Views.Forms;
 namespace MusicStore
 {
     public partial class App : Application

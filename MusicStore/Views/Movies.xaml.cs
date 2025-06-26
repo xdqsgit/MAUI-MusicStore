@@ -1,8 +1,8 @@
 namespace MusicStore.Views
 {
-    public partial class Login : ContentPage
+    public partial class Movies : ContentPage
     {
-        public Login()
+        public Movies()
         {
             InitializeComponent();
         }

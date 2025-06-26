@@ -3,29 +3,117 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:carousel="clr-namespace:Syncfusion.Maui.Carousel;assembly=Syncfusion.Maui.Carousel"
-             x:Class="MusicStore.MainPage">
+             xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
+             xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:model="clr-namespace:MusicStore.Model" 
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:c="clr-namespace:MusicStore.Controls"
+             xmlns:vm="clr-namespace:MusicStore.ViewModel"
+             x:Class="MusicStore.MainPage"   
+             x:DataType="vm:MainPageViewModel"
+             Shell.NavBarIsVisible="False"
+             >
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="itemTemplate">
-                <Image Source="{Binding Image}" 
-                        Aspect="AspectFit"/>
-            </DataTemplate>
         </ResourceDictionary>
+        <Style x:Key="searchBarStyle" TargetType="Border">
+            <Setter Property="Stroke" Value="#ccc" />
+            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="StrokeShape">
+                <RoundRectangle CornerRadius="45" />
+            </Setter>
+        </Style>
     </ContentPage.Resources>
 
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#AF5EAE5E" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <FlexLayout>
-                <Button Text="三" FlexLayout.Grow="1" />
-                <SearchBar FlexLayout.Grow="3"   Placeholder="Search items..." HeightRequest="20" WidthRequest="200" />
-                <Button Text="🎼" FlexLayout.Grow="1"  />
-            </FlexLayout>
-            <carousel:SfCarousel x:Name="carousel"  
-                            ItemTemplate="{StaticResource itemTemplate}" 
-                            ItemsSource="{Binding ImageCollection}" />
+            BackgroundColor="#C4C4C4CC"
+            Padding="10,15"
+            Spacing="20">
+            <VerticalStackLayout.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#fff" Offset="0.1" />
+                    <GradientStop Color="#ccc" Offset="1.0" />
+                </LinearGradientBrush>
+            </VerticalStackLayout.Background>
+            <Grid ColumnDefinitions="10,*,10" ColumnSpacing="12" RowDefinitions="35" >
+                <Button Text="三" Background="Transparent" TextColor="Black" WidthRequest="50" HeightRequest="50" Command="{Binding ShowShellCommand}" />
+                <Border Grid.Column="1" Style="{StaticResource searchBarStyle}" VerticalOptions="End" >
+                    <SearchBar x:Name="search"
+                               Placeholder="Search items..."  
+                               HeightRequest="35" 
+                               Margin="0,-5" 
+                               SearchCommand="{Binding SearchCommand}"
+                               SearchCommandParameter="{Binding Text,x:DataType='SearchBar',Source={x:Reference search}}"
+                               />
+                </Border>
+                <Button Grid.Column="2" Text="🎼"  Background="Transparent" 
+                        HeightRequest="50"
+                        WidthRequest="50"/>
+            </Grid>
+            <ListView x:Name="searchResults" IsVisible="{Binding IsSearchResultVisible}"
+                  ItemsSource="{Binding SearchResult}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ListData">
+                        <ViewCell>
+                            <Label Text="{Binding Name}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Border Padding="5,10" BackgroundColor="#fff" >
+                <Border.StrokeShape>
+                    <RoundRectangle  CornerRadius="10" ></RoundRectangle>
+                </Border.StrokeShape>
+                <VerticalStackLayout>
+                <carousel:SfCarousel x:Name="carousel"  
+                                 HeightRequest="200"                                 
+                                 ItemHeight="170"
+                                 ItemWidth="270"
+                                 RotationAngle="50"                                 
+                                 ItemsSource="{Binding ImageCollection}"
+                                 SelectedIndex="1"
+                                 ZIndex="2"
+                                 >
+                <carousel:SfCarousel.ItemTemplate>
+                    <DataTemplate x:DataType="model:CarouselModel">
+                        <Image Source="{Binding Image}" 
+                                Aspect="AspectFill"/>
+                    </DataTemplate>
+                </carousel:SfCarousel.ItemTemplate>
+            </carousel:SfCarousel>
+               
+                <FlexLayout JustifyContent="SpaceBetween">                    
+                    <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
+                    <c:FeatureView Title="歌单" ImageSource="playlist.png" />
+                    <c:FeatureView Title="悦享时刻" ImageSource="playlist.png" />
+                    <c:FeatureView Title="排行榜" ImageSource="playlist.png" />
+                    <c:FeatureView Title="小众曲目" ImageSource="playlist.png" />
+                </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
+            <ScrollView Orientation="Horizontal">
+                <HorizontalStackLayout Spacing="10" HeightRequest="200">
+                <cards:SfCardView CornerRadius="10" WidthRequest="200">
+                    <Label  Text="Peach" BackgroundColor="#fff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </cards:SfCardView>
+
+                <cards:SfCardView CornerRadius="10" WidthRequest="200">
+                    <Label  Text="MediumPurple" BackgroundColor="#fff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </cards:SfCardView>
+
+                <cards:SfCardView CornerRadius="10" WidthRequest="200" >
+                    <Label  Text="LightPink" BackgroundColor="#fff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </cards:SfCardView>
+                </HorizontalStackLayout>
+            </ScrollView>
         </VerticalStackLayout>
     </ScrollView>
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MusicStore.Controls"
+             x:Class="MusicStore.Controls.FeatureView"             
+             x:Name="this"
+             x:DataType="local:FeatureView"
+             >
+    
+    <VerticalStackLayout BindingContext="{x:Reference this}" >
+        <Border BackgroundColor="#B2EDD0" Padding="0,15"
+              WidthRequest="60" HeightRequest="60">
+            <Border.StrokeShape>
+                <Ellipse />
+            </Border.StrokeShape>
+            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="{Binding ImageSource}" Aspect="Center" />
+                <Label Text="{Binding TextOnImage}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" FontSize="16" ></Label>
+            </Grid>
+        </Border>
+        <Label Text="{Binding Title}" TextColor="#383838"  HorizontalOptions="Center" FontSize="16" />
+    </VerticalStackLayout>
+</ContentView>
