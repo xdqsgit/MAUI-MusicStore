@@ -6,7 +6,9 @@
              x:Class="MusicStore.Controls.FlyoutHeader">
     <VerticalStackLayout Padding="20">
         <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween">
-            <Button ImageSource="dark_theme.png" Command="{Binding ChangeThemeCommand}"></Button>
+            <Button ImageSource="dark_theme.png"
+                    Background="Transparent"
+                    Command="{Binding ChangeThemeCommand}"/>
 
             <VerticalStackLayout>
 
@@ -23,7 +25,10 @@
                 <Label Text="用户名"></Label>
             </VerticalStackLayout>
 
-            <Button Text="扫一扫"></Button>
+            <Button Text="扫一扫"
+                    Background="Transparent"
+                    TextColor="Black"
+                    />
         </FlexLayout>
 
         <Grid BackgroundColor="AliceBlue" Padding="5" >
