@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
 using Syncfusion.Maui.Toolkit.Hosting;
+using ZXing.Net.Maui.Controls;
 namespace MusicStore
 {
     public static class MauiProgram
@@ -12,6 +13,7 @@ namespace MusicStore
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseBarcodeReader()
                 .UseMauiCommunityToolkit()
 				.ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
@@ -24,8 +26,8 @@ namespace MusicStore
                     fonts.AddFont("UIFontIcons.ttf", "FontIcons");
                     fonts.AddFont("Dashboard.ttf", "DashboardFontIcons");
                 });
-			//Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-			//Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("YOUR LICENSE KEY");
+            //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF1cWWhPYVFwWmFZfVtgdVVMZFtbRn5PIiBoS35Rc0VlWHZccnBSRGhcUUN/VEBU");
 
 #if DEBUG
     		builder.Logging.AddDebug();

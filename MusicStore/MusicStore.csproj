@@ -39,14 +39,20 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>zh-cn</DefaultLanguage>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
+	  <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -85,6 +91,7 @@
 	   <PackageReference Include="Syncfusion.Maui.ProgressBar" Version="29.2.11" />
 	   <PackageReference Include="Syncfusion.Maui.Rotator" Version="29.1.33" />
 	   <PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.5" />
+	   <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 	 </ItemGroup>
 	
 	 <ItemGroup>
@@ -149,6 +156,9 @@
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
 	   <MauiXaml Update="Views\Movies.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </MauiXaml>
+	   <MauiXaml Update="Views\ZXingPage.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
 	 </ItemGroup>
