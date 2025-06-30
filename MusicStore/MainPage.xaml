@@ -118,31 +118,76 @@
                 <cards:SfCardView CornerRadius="10" HeightRequest="400">
                     <Label  Text="Peach" BackgroundColor="#fff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 </cards:SfCardView>
-                <StackLayout HeightRequest="120">
+                <StackLayout HeightRequest="155">
                     <Label HorizontalOptions="Center" VerticalOptions="Center" Text="~到底咯!" />
                 </StackLayout>
             </VerticalStackLayout>
         </ScrollView>
         <VerticalStackLayout AbsoluteLayout.LayoutFlags="All"
-                             AbsoluteLayout.LayoutBounds="1,1,1,0.15"                            
+                             AbsoluteLayout.LayoutBounds="1,1,1,0.2"                            
                              >
-            <cards:SfCardView CornerRadius="10,10,0,0" HeightRequest="50"
-                              BackgroundColor="#F7F7F7" >
-                <Label  Text="Peach"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-            </cards:SfCardView>
+            <AbsoluteLayout>
+                <cards:SfCardView CornerRadius="10,10,0,0"
+                                  AbsoluteLayout.LayoutFlags="All"
+                                  AbsoluteLayout.LayoutBounds="0,1,1,0.7"
+                                  ZIndex="1"
+                                  BorderColor="#f1f1f1"
+                                  BackgroundColor="#f1f1f1" >
+                </cards:SfCardView>
 
+                <FlexLayout AbsoluteLayout.LayoutFlags="WidthProportional"
+                            AbsoluteLayout.LayoutBounds="0,1,1,80"
+                            ZIndex="3" 
+                            Padding="10" 
+                            AlignItems="Center"
+                            JustifyContent="Start">
+                    
+                    <Border HeightRequest="60" 
+                            WidthRequest="60"
+                            StrokeShape="RoundRectangle 80,80,80,80"
+                            HorizontalOptions="Center"                    
+                            StrokeThickness="10"
+                            Stroke="Black"
+                            Margin="0,0,0,0">
+
+                        <Image Aspect="AspectFit"
+                               Source="avatar.png"
+                               SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                               HeightRequest="40"
+                               WidthRequest="40"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+                    </Border>
+
+                    <VerticalStackLayout FlexLayout.Grow="1" Padding="15">
+                        <Label Text="泸州月" FontSize="16" />
+                        <Label Text="许嵩" FontSize="14" TextColor="#666" />
+                    </VerticalStackLayout>
+
+                    <ImageButton  Source="play.png" 
+                                  WidthRequest="25" 
+                                  HeightRequest="25" 
+                                  Aspect="AspectFit" 
+                                  Background="Transparent"/>
+                    <ImageButton  Source="music_list.png" 
+                                  Aspect="AspectFit"
+                                  WidthRequest="25" 
+                                  HeightRequest="25" 
+                                  Background="Transparent"/>                    
+                </FlexLayout>
+            </AbsoluteLayout>
             <cards:SfCardView CornerRadius="0" BackgroundColor="#fff" >
                 <FlexLayout JustifyContent="SpaceAround" Padding="0,10">
                     <VerticalStackLayout>
-                        <Image Source="home.png" WidthRequest="35" HeightRequest="45" />
+                        <ImageButton Source="home.png" WidthRequest="35" HeightRequest="45" />
                         <Label Text=" 首页"  Margin="0,-10"/>
                     </VerticalStackLayout>
                     <VerticalStackLayout>
-                        <Image Source="my_not_select.png"   WidthRequest="35" HeightRequest="45" />
+                        <ImageButton Source="my_not_select.png"   WidthRequest="35" HeightRequest="45" />
                         <Label Text=" 我的" Margin="0,-10" />
                     </VerticalStackLayout>
                     <VerticalStackLayout>
-                        <Image Source="favorites_not_select.png"  WidthRequest="35" HeightRequest="45" />
+                        <ImageButton Source="favorites_not_select.png"  WidthRequest="35" HeightRequest="45" />
                         <Label Text=" 收藏"  Margin="0,-10" />
                     </VerticalStackLayout>
                 </FlexLayout>

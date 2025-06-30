@@ -8,6 +8,9 @@
              >
     
     <VerticalStackLayout BindingContext="{x:Reference this}" >
+        <VerticalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="onTapGestureRecognizer_Tapped"/>
+        </VerticalStackLayout.GestureRecognizers>
         <Border BackgroundColor="#B2EDD0" Padding="0,15"
               WidthRequest="60" HeightRequest="60">
             <Border.StrokeShape>

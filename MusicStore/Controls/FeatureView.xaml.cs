@@ -30,6 +30,9 @@ public partial class FeatureView : ContentView
 		InitializeComponent();
 	}
 
-
+    public void onTapGestureRecognizer_Tapped(object s, TappedEventArgs e)
+    {
+        Console.WriteLine("标题被点击了 tapped");
+    }
 
 }
