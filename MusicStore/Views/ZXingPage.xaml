@@ -11,5 +11,7 @@
             HorizontalOptions="Center" />
         
         <zxing:CameraBarcodeReaderView x:Name="barcodeScannerView" />
+        <Button Text="取消" Clicked="Button_Clicked"/>        
+        <Button Text="切换摄像头" Clicked="ChangeCamera_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>

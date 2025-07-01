@@ -69,37 +69,30 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Border Padding="5,10" BackgroundColor="#fff" >
-                    <Border.StrokeShape>
-                        <RoundRectangle  CornerRadius="10" ></RoundRectangle>
-                    </Border.StrokeShape>
-                    <VerticalStackLayout>
-                        <carousel:SfCarousel x:Name="carousel"  
-                                 HeightRequest="200"                                 
-                                 ItemHeight="170"
-                                 ItemWidth="270"
-                                 RotationAngle="50"                                 
-                                 ItemsSource="{Binding ImageCollection}"
-                                 SelectedIndex="1"
-                                 ZIndex="2"
-                                 >
-                            <carousel:SfCarousel.ItemTemplate>
-                                <DataTemplate x:DataType="model:CarouselModel">
-                                    <Image Source="{Binding Image}" 
-                                Aspect="AspectFill"/>
-                                </DataTemplate>
-                            </carousel:SfCarousel.ItemTemplate>
-                        </carousel:SfCarousel>
-
-                        <FlexLayout JustifyContent="SpaceBetween">
-                            <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
-                            <c:FeatureView Title="歌单" ImageSource="playlist.png" />
-                            <c:FeatureView Title="悦享时刻" ImageSource="playlist.png" />
-                            <c:FeatureView Title="排行榜" ImageSource="playlist.png" />
-                            <c:FeatureView Title="小众曲目" ImageSource="playlist.png" />
-                        </FlexLayout>
-                    </VerticalStackLayout>
-                </Border>
+                <cards:SfCardLayout Padding="5,10" 
+                                    BindableLayout.ItemsSource="{Binding ImageCollection}"
+                                    VisibleIndexChanging="SfCardLayout_VisibleIndexChanged"
+                                    >
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="model:CarouselModel">
+                            <cards:SfCardView BackgroundColor="#fff"   >
+                                <Image Source="{Binding Image}" 
+                                       Aspect="AspectFill"
+                                       IsAnimationPlaying="True"
+                                       />
+                            </cards:SfCardView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </cards:SfCardLayout>
+                
+                    <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10">
+                        <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
+                        <c:FeatureView Title="歌单" ImageSource="playlist.png" />
+                        <c:FeatureView Title="悦享时刻" ImageSource="playlist.png" />
+                        <c:FeatureView Title="排行榜" ImageSource="playlist.png" />
+                        <c:FeatureView Title="小众曲目" ImageSource="playlist.png" />
+                    </FlexLayout>
+                
                 <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                     <HorizontalStackLayout Spacing="10" HeightRequest="200">
                         <cards:SfCardView CornerRadius="10" WidthRequest="200">
@@ -123,40 +116,37 @@
                 </StackLayout>
             </VerticalStackLayout>
         </ScrollView>
-        <VerticalStackLayout AbsoluteLayout.LayoutFlags="All"
-                             AbsoluteLayout.LayoutBounds="1,1,1,0.2"                            
+        <VerticalStackLayout AbsoluteLayout.LayoutBounds="1,1,1,160"
+                             AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                              >
             <AbsoluteLayout>
                 <cards:SfCardView CornerRadius="10,10,0,0"
-                                  AbsoluteLayout.LayoutFlags="All"
-                                  AbsoluteLayout.LayoutBounds="0,1,1,0.7"
-                                  ZIndex="1"
-                                  BorderColor="#f1f1f1"
-                                  BackgroundColor="#f1f1f1" >
+                                  AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                                  AbsoluteLayout.LayoutBounds="0,1,1,60"
+                                  Shadow="#000 4 4"
+                                  BackgroundColor="#f5f5f5" >
                 </cards:SfCardView>
 
                 <FlexLayout AbsoluteLayout.LayoutFlags="WidthProportional"
                             AbsoluteLayout.LayoutBounds="0,1,1,80"
-                            ZIndex="3" 
                             Padding="10" 
                             AlignItems="Center"
                             JustifyContent="Start">
-                    
+
                     <Border HeightRequest="60" 
                             WidthRequest="60"
                             StrokeShape="RoundRectangle 80,80,80,80"
                             HorizontalOptions="Center"                    
                             StrokeThickness="10"
                             Stroke="Black"
+                            Padding="0"
                             Margin="0,0,0,0">
 
                         <Image Aspect="AspectFit"
                                Source="avatar.png"
-                               SemanticProperties.Description="Cute dot net bot waving hi to you!"
                                HeightRequest="40"
-                               WidthRequest="40"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center" />
+                               WidthRequest="40"                               
+                               />
                     </Border>
 
                     <VerticalStackLayout FlexLayout.Grow="1" Padding="15">
@@ -167,28 +157,33 @@
                     <ImageButton  Source="play.png" 
                                   WidthRequest="25" 
                                   HeightRequest="25" 
-                                  Aspect="AspectFit" 
+                                  Aspect="AspectFit"     
+                                  FlexLayout.AlignSelf="End"
                                   Background="Transparent"/>
                     <ImageButton  Source="music_list.png" 
                                   Aspect="AspectFit"
                                   WidthRequest="25" 
                                   HeightRequest="25" 
-                                  Background="Transparent"/>                    
+                                  FlexLayout.AlignSelf="End"                                  
+                                  Background="Transparent"/>
                 </FlexLayout>
             </AbsoluteLayout>
             <cards:SfCardView CornerRadius="0" BackgroundColor="#fff" >
                 <FlexLayout JustifyContent="SpaceAround" Padding="0,10">
                     <VerticalStackLayout>
-                        <ImageButton Source="home.png" WidthRequest="35" HeightRequest="45" />
-                        <Label Text=" 首页"  Margin="0,-10"/>
+                        <ImageButton Source="home.png" 
+                                     WidthRequest="35" 
+                                     HeightRequest="35"                                      
+                                     />
+                        <Label Text=" 首页"  Margin="5,-5"/>
                     </VerticalStackLayout>
                     <VerticalStackLayout>
-                        <ImageButton Source="my_not_select.png"   WidthRequest="35" HeightRequest="45" />
-                        <Label Text=" 我的" Margin="0,-10" />
+                        <ImageButton Source="my_not_select.png"   WidthRequest="35" HeightRequest="35" />
+                        <Label Text=" 我的" Margin="5,-5" />
                     </VerticalStackLayout>
                     <VerticalStackLayout>
-                        <ImageButton Source="favorites_not_select.png"  WidthRequest="35" HeightRequest="45" />
-                        <Label Text=" 收藏"  Margin="0,-10" />
+                        <ImageButton Source="favorites_not_select.png"  WidthRequest="35" HeightRequest="35" Aspect="AspectFit" />
+                        <Label Text=" 收藏"  Margin="5,-5" />
                     </VerticalStackLayout>
                 </FlexLayout>
             </cards:SfCardView>

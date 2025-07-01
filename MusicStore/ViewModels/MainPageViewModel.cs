@@ -16,11 +16,12 @@ namespace MusicStore.ViewModel
         {
             ImageCollection.Add(new CarouselModel("carousel_person1.jpg"));
             ImageCollection.Add(new CarouselModel("carousel_person2.png"));
+            ImageCollection.Add(new CarouselModel("carousel_person3.jpg"));
+            ImageCollection.Add(new CarouselModel("carousel_person4.jpg"));
+            ImageCollection.Add(new CarouselModel("carousel_person5.png"));
+            ImageCollection.Add(new CarouselModel("carousel_person6.gif"));
             ImageCollection.Add(new CarouselModel("dotnet_bot.png"));
-            ImageCollection.Add(new CarouselModel("carousel_person3.jgp"));
-            //ImageCollection.Add(new CarouselModel("carousel_person4.png"));
-            //ImageCollection.Add(new CarouselModel("carousel_person5.png"));
-        
+
         }
         public int DayOfMonth => DateTime.Now.Day;
         private List<ListData> SearchData = new List<ListData>() { new ListData("Adele"),
@@ -31,7 +32,7 @@ namespace MusicStore.ViewModel
             new ListData("Ddele"),
         };
         [ObservableProperty]
-        private ObservableCollection<CarouselModel>? imageCollection = new ObservableCollection<CarouselModel>();
+        private ObservableCollection<CarouselModel> imageCollection = new ObservableCollection<CarouselModel>();
 
         [ObservableProperty]
         private bool isSearchResultVisible;
