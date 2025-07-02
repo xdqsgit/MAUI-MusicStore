@@ -6,12 +6,13 @@ namespace MusicStore
     public partial class MainPage : ContentPage
     {
 
-        public MainPage()
+        public MainPage(MainPageViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
 
-        private void SfCardLayout_VisibleIndexChanged(object sender, CardVisibleIndexChangingEventArgs e)
+        private void SfCardLayout_VisibleIndexChanged(object sender, CardVisibleIndexChangedEventArgs e)
         {
             var sfCardLayout = sender as SfCardLayout;
 

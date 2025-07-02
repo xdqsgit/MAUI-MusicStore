@@ -95,6 +95,10 @@
 	 </ItemGroup>
 	
 	 <ItemGroup>
+	   <ProjectReference Include="..\KWApi\KWApi.csproj" />
+	 </ItemGroup>
+	
+	 <ItemGroup>
 	   <Compile Update="Controls\FeatureView.xaml.cs">
 	     <DependentUpon>FeatureView.xaml</DependentUpon>
 	   </Compile>

@@ -14,8 +14,7 @@
         <controls:FlyoutHeader></controls:FlyoutHeader>
     </Shell.FlyoutHeader>
 
-
-    <ShellContent Title = "MainPage" ContentTemplate = "{DataTemplate local:MainPage}" Route ="MainPage" />
+<ShellContent Title = "MainPage" ContentTemplate = "{DataTemplate local:MainPage}" Route ="MainPage" />
 <ShellContent Title = "login" ContentTemplate = "{DataTemplate vm:Login}" Route ="CheckBoxFeatures" /> 
 <ShellContent Title = "CheckBox" ContentTemplate = "{DataTemplate local:CheckBoxFeatures}" Route ="CheckBoxFeatures" /> 
 <ShellContent Title = "ListView" ContentTemplate = "{DataTemplate local:ListViewFeatures}" Route ="ListViewFeatures" /> 

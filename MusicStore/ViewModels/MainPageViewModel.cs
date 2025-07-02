@@ -6,23 +6,55 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using KWApi;
+using KWApi.Models;
 using MusicStore.Model;
 
 namespace MusicStore.ViewModel
 {
     public partial class MainPageViewModel : ObservableObject
     {
-        public MainPageViewModel()
+        KWApIHelper KWApIHelper;
+
+        public MainPageViewModel(KWApIHelper kWApIHelper)
         {
-            ImageCollection.Add(new CarouselModel("carousel_person1.jpg"));
-            ImageCollection.Add(new CarouselModel("carousel_person2.png"));
-            ImageCollection.Add(new CarouselModel("carousel_person3.jpg"));
-            ImageCollection.Add(new CarouselModel("carousel_person4.jpg"));
-            ImageCollection.Add(new CarouselModel("carousel_person5.png"));
-            ImageCollection.Add(new CarouselModel("carousel_person6.gif"));
-            ImageCollection.Add(new CarouselModel("dotnet_bot.png"));
+            KWApIHelper = kWApIHelper;
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            LoadBanner();
+            LoadBangList();
+        }
+
+        public async void LoadBanner()
+        {
+            //ImageCollection.Add(new CarouselModel("carousel_person1.jpg"));
+            //ImageCollection.Add(new CarouselModel("carousel_person2.png"));
+            //ImageCollection.Add(new CarouselModel("carousel_person3.jpg"));
+            //ImageCollection.Add(new CarouselModel("carousel_person4.jpg"));
+            //ImageCollection.Add(new CarouselModel("carousel_person5.png"));
+            //ImageCollection.Add(new CarouselModel("carousel_person6.gif"));
+            //ImageCollection.Add(new CarouselModel("dotnet_bot.png"));
+
+            var bannerList = await KWApIHelper.GetRcmPlayList(10);
+            if (bannerList != null && bannerList.Data != null)
+            {
+                BannerList=new ObservableCollection<RcmPlayListItem>(bannerList.Data);
+            }
 
         }
+
+        public async void LoadBangList()
+        {
+            var bangList = await KWApIHelper.GetBangListAsync();
+            if (bangList != null)
+            {
+                BangList=new ObservableCollection<KWBangList>(bangList);
+            }
+        }
+
         public int DayOfMonth => DateTime.Now.Day;
         private List<ListData> SearchData = new List<ListData>() { new ListData("Adele"),
             new ListData("Adele1"),
@@ -32,7 +64,10 @@ namespace MusicStore.ViewModel
             new ListData("Ddele"),
         };
         [ObservableProperty]
-        private ObservableCollection<CarouselModel> imageCollection = new ObservableCollection<CarouselModel>();
+        private ObservableCollection<RcmPlayListItem> bannerList = new ObservableCollection<RcmPlayListItem>();
+
+        [ObservableProperty]
+        private ObservableCollection<KWBangList> bangList = new ObservableCollection<KWBangList>();
 
         [ObservableProperty]
         private bool isSearchResultVisible;

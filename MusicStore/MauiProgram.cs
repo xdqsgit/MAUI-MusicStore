@@ -1,5 +1,7 @@
 using CommunityToolkit.Maui;
+using KWApi;
 using Microsoft.Extensions.Logging;
+using MusicStore.ViewModel;
 using Syncfusion.Maui.Core.Hosting;
 
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -32,6 +34,11 @@ namespace MusicStore
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddSingleton<KWApIHelper>();
+            builder.Services.AddTransient<MainPage>();
+
+            builder.Services.AddTransient<MainPageViewModel>();
 
             return builder.Build();
         }
