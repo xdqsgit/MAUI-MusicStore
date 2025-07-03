@@ -16,12 +16,6 @@
 
 <ShellContent Title = "MainPage" ContentTemplate = "{DataTemplate local:MainPage}" Route ="MainPage" />
 <ShellContent Title = "login" ContentTemplate = "{DataTemplate vm:Login}" Route ="CheckBoxFeatures" /> 
-<ShellContent Title = "CheckBox" ContentTemplate = "{DataTemplate local:CheckBoxFeatures}" Route ="CheckBoxFeatures" /> 
-<ShellContent Title = "ListView" ContentTemplate = "{DataTemplate local:ListViewFeatures}" Route ="ListViewFeatures" /> 
-<ShellContent Title = "Step Progress Bar" ContentTemplate = "{DataTemplate local:StepProgressBarFeatures}" Route ="StepProgressBarFeatures" /> 
-<ShellContent Title = "Avatar View" ContentTemplate = "{DataTemplate local:AvatarViewFeatures}" Route ="AvatarViewFeatures" /> 
-<ShellContent Title = "Button" ContentTemplate = "{DataTemplate local:ButtonFeatures}" Route ="ButtonFeatures" />
-    <ShellContent Title = "Movies" ContentTemplate = "{DataTemplate vm:Movies}" Route ="Movies" /> 
 
 
 </Shell>

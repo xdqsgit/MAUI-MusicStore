@@ -71,29 +71,25 @@
                 </ListView>
                 <!--最新歌单-->
                 <cards:SfCardLayout Padding="5,10" 
-                                    BindableLayout.ItemsSource="{Binding ImageCollection}"
+                                    BindableLayout.ItemsSource="{Binding BannerList}"
                                     VisibleIndexChanged="SfCardLayout_VisibleIndexChanged"
+                                    Shadow="#ccc 4 4"
+                                    HeightRequest="240"
                                     >
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="kw:RcmPlayListItem">
+                        <DataTemplate x:DataType="kw:BannerInfo">
                             <cards:SfCardView BackgroundColor="#fff" >
-                                <Grid RowDefinitions="3*,1*">
-                                    <Image Source="{Binding Img}"
+                                <Grid RowDefinitions="3*,1.3*">
+                                    <Image Source="{Binding NewPic}"
                                            Aspect="AspectFill"
+                                           HeightRequest="240"
                                        />
                                     <Label Grid.Row="1"
-                                           VerticalOptions="Center"
-                                           Padding="5,0"
-                                           >
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding Name}"/>
-                                                <Span Text=" "/>
-                                                <Span Text="▶️" TextColor="#ccc" />
-                                                <Span Text="{Binding Listencnt}" TextColor="#ccc"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
+                                           VerticalOptions="End"
+                                           Padding="5,5"
+                                           Text="{Binding NewPicText}"
+                                           />
+
                                 </Grid>
 
                             </cards:SfCardView>
@@ -101,7 +97,7 @@
                     </BindableLayout.ItemTemplate>
                 </cards:SfCardLayout>
 
-                <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10">
+                <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10" Margin="0,-20" >
                     <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
                     <c:FeatureView Title="歌单" ImageSource="playlist.png" />
                     <c:FeatureView Title="悦享时刻" ImageSource="playlist.png" />
@@ -109,25 +105,22 @@
                     <c:FeatureView Title="小众曲目" ImageSource="playlist.png" />
                 </FlexLayout>
                 <!--最新歌单-->
-                <sfListView:SfListView ItemsSource="{Binding BannerList}"
+                <sfListView:SfListView ItemsSource="{Binding DayRmcList}"
                                       ScrollBarVisibility="Always"
                                       SelectionMode="None"
                                       Orientation="Horizontal" 
-                                      ItemSize="92"
-                                      HeightRequest="145"
-                                      Margin="16,10,0,0"
-                                      ItemSpacing="0,0,12,10">
+                                      ItemSize="100"
+                                      HeightRequest="150"
+                                       ItemSpacing="10">
                     <sfListView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="kw:RcmPlayListItem">
                             <Grid RowSpacing="8">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="107" />
-                                    <RowDefinition Height="22" />
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="20" />
                                 </Grid.RowDefinitions>
                                 <Border x:Name="border"
-                                        Stroke="{AppThemeBinding Dark=#D0BCFF,Light=#6750A4}"                        
-                                        Padding="0"
-                                        Margin="0"
+                                        Stroke="{AppThemeBinding Dark=#D0BCFF,Light=#6750A4}"
                                         HorizontalOptions="Center">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="6" />
@@ -135,8 +128,7 @@
 
                                     <Image Source="{Binding Img}"
                                            Aspect="AspectFill"
-                                           HeightRequest="100"
-                                           WidthRequest="84" />
+                                           WidthRequest="100"/>
                                 </Border>
                                 <Label Grid.Row="1"
                                        Text="{Binding Name}"
@@ -153,63 +145,68 @@
                         </DataTemplate>
                     </sfListView:SfListView.ItemTemplate>
                 </sfListView:SfListView>
-
-                <sfListView:SfListView ItemsSource="{Binding BangList}"
-                                       ScrollBarVisibility="Always"
-                                      SelectionMode="None"
-                                      Orientation="Horizontal" 
-                                      ItemSize="150"
-                                      Margin="16,10,0,0"
-                                      ItemSpacing="0,0,12,10">
-                    <sfListView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="kw:KWBangList">
-                            <Border>
-                                <VerticalStackLayout>
-                                    <Image Source="{Binding Pic}" Aspect="AspectFill"/>
-                                    <Label Text="{Binding Name}"/>
-                                    <ListView ItemsSource="{Binding MusicList}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="kw:MusicList">
-                                                <ViewCell>
-                                                <Grid Padding="10">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Image Grid.RowSpan="2"
-                                                           Source="{Binding Pic120}"
-                                                           Aspect="AspectFill"
-                                                           HeightRequest="60"
-                                                           WidthRequest="60" />
-                                                    <Label Grid.Column="1"
-                                                           Text="{Binding Artist}"
-                                                           FontAttributes="Bold" />
-                                                    <Label Grid.Row="1"
-                                                           Grid.Column="1"
-                                                           Text="{Binding Name}"
-                                                           FontAttributes="Italic"
-                                                           VerticalOptions="End" />
-                                                    </Grid>
-                                                </ViewCell>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </VerticalStackLayout>
-                            </Border>
-                        </DataTemplate>
-                    </sfListView:SfListView.ItemTemplate>
-                </sfListView:SfListView>
-
+                <ScrollView Orientation="Both">
+                    <FlexLayout JustifyContent="SpaceEvenly"                                 
+                            Direction="Row"                            
+                            BindableLayout.ItemsSource="{Binding BangList}"
+                            Padding="5"
+                            >
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="kw:KWBangList">
+                                <Border StrokeShape="RoundRectangle 4"
+                                        Padding="5"
+                                        Margin="5"
+                                        BackgroundColor="#eee"
+                                        WidthRequest="180"
+                                        >
+                                    <VerticalStackLayout>
+                                        <Image Source="{Binding Pic}" Aspect="AspectFill" />
+                                        <Label Text="{Binding Name} " 
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"/>
+                                        <ListView ItemsSource="{Binding MusicList}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="kw:MusicList">
+                                                    <ViewCell>
+                                                        <Grid Padding="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Grid.RowSpan="2"
+                                                                   Source="{Binding Pic120}"
+                                                                   Aspect="AspectFill"
+                                                                   HeightRequest="40"
+                                                                   WidthRequest="40" />
+                                                            <Label Grid.Column="1"
+                                                                   Text="{Binding Artist}"
+                                                                   />
+                                                            <Label Grid.Row="1"
+                                                                   Grid.Column="1"
+                                                                   Text="{Binding Name}"
+                                                                   VerticalOptions="End" />
+                                                        </Grid>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </ScrollView>
                 <!--底部-->
                 <StackLayout HeightRequest="155">
                     <Label HorizontalOptions="Center" VerticalOptions="Center" Text="~到底咯!" />
                 </StackLayout>
             </VerticalStackLayout>
         </ScrollView>
+        <!--底部导航条-->
         <VerticalStackLayout AbsoluteLayout.LayoutBounds="1,1,1,160"
                              AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                              >
@@ -220,7 +217,7 @@
                                   Shadow="#000 4 4"
                                   BackgroundColor="#f5f5f5" >
                 </cards:SfCardView>
-
+                <!--当前播放歌曲-->
                 <FlexLayout AbsoluteLayout.LayoutFlags="WidthProportional"
                             AbsoluteLayout.LayoutBounds="0,1,1,80"
                             Padding="10" 

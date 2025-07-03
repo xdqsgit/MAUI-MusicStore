@@ -159,9 +159,6 @@
 	   <MauiXaml Update="Views\Login.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
-	   <MauiXaml Update="Views\Movies.xaml">
-	     <Generator>MSBuild:Compile</Generator>
-	   </MauiXaml>
 	   <MauiXaml Update="Views\ZXingPage.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>

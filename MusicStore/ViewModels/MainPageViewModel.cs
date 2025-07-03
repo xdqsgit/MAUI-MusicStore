@@ -25,23 +25,25 @@ namespace MusicStore.ViewModel
         private void LoadData()
         {
             LoadBanner();
+            LoadDayRmcPlayList();
             LoadBangList();
+        }
+
+        private async void LoadDayRmcPlayList()
+        {
+            var dayRmcPlayList = await KWApIHelper.GetDayRcmPlayListAsync();
+            if (dayRmcPlayList != null && dayRmcPlayList.List != null)
+            {
+                DayRmcList = new ObservableCollection<RcmPlayListItem>(dayRmcPlayList.List);
+            }
         }
 
         public async void LoadBanner()
         {
-            //ImageCollection.Add(new CarouselModel("carousel_person1.jpg"));
-            //ImageCollection.Add(new CarouselModel("carousel_person2.png"));
-            //ImageCollection.Add(new CarouselModel("carousel_person3.jpg"));
-            //ImageCollection.Add(new CarouselModel("carousel_person4.jpg"));
-            //ImageCollection.Add(new CarouselModel("carousel_person5.png"));
-            //ImageCollection.Add(new CarouselModel("carousel_person6.gif"));
-            //ImageCollection.Add(new CarouselModel("dotnet_bot.png"));
-
-            var bannerList = await KWApIHelper.GetRcmPlayList(10);
-            if (bannerList != null && bannerList.Data != null)
+            var banners = await KWApIHelper.GetBannerListAsync();
+            if (banners != null && banners!= null)
             {
-                BannerList=new ObservableCollection<RcmPlayListItem>(bannerList.Data);
+                BannerList = new ObservableCollection<BannerInfo>(banners.Skip(2));
             }
 
         }
@@ -51,7 +53,7 @@ namespace MusicStore.ViewModel
             var bangList = await KWApIHelper.GetBangListAsync();
             if (bangList != null)
             {
-                BangList=new ObservableCollection<KWBangList>(bangList);
+                BangList = new ObservableCollection<KWBangList>(bangList);
             }
         }
 
@@ -64,7 +66,10 @@ namespace MusicStore.ViewModel
             new ListData("Ddele"),
         };
         [ObservableProperty]
-        private ObservableCollection<RcmPlayListItem> bannerList = new ObservableCollection<RcmPlayListItem>();
+        private ObservableCollection<BannerInfo> bannerList = new ObservableCollection<BannerInfo>();
+
+        [ObservableProperty]
+        private ObservableCollection<RcmPlayListItem> dayRmcList = new ObservableCollection<RcmPlayListItem>();
 
         [ObservableProperty]
         private ObservableCollection<KWBangList> bangList = new ObservableCollection<KWBangList>();

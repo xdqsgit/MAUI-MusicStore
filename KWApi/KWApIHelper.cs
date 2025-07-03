@@ -62,6 +62,19 @@ namespace KWApi
         }
 
         /// <summary>
+        /// 每日推荐歌单
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<KWDayRcmPlayList?> GetDayRcmPlayListAsync()
+        {
+            var url = $"{ApiUrl}/rcm/index/playlist?loginUid=0&httpsStatus=1&reqId=b6e77101-57ba-11f0-9df9-c1e04916a71e&plat=web_www";
+
+            var result = await GetAsync<KWDayRcmPlayList>(url);
+            return result;
+        }
+
+        /// <summary>
         /// 最新歌单
         /// </summary>
         /// <param name="count"></param>
@@ -82,6 +95,20 @@ namespace KWApi
             var result = await GetAsync<List<KWBangList>>(url);
             return result;
         }
+
+        
+        /// <summary>
+        /// 获取banner
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<BannerInfo>?> GetBannerListAsync()
+        {
+            var url = $"{ApiUrl}/banner/index/bannerList?httpsStatus=1&reqId=e09a1b70-57d2-11f0-9e9d-45fbeda80d08&plat=web_www";
+            var result = await GetAsync<List<BannerInfo>>(url);
+            return result;
+        }
+
+
     }
 
 }
