@@ -21,4 +21,4 @@ Special thanks to the Syncfusion team for providing the excellent MAUI controls 
 Feel free to explore the code and contribute to the project. If you have any questions or suggestions, please don't hesitate to reach out.
 
 ## PerView
-![mainpage](./mainpage.png)
+![mainpage](https://img.picui.cn/free/2025/07/03/686630a09f5f1.png)
