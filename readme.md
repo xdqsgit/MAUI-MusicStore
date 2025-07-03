@@ -19,3 +19,6 @@ This is an ongoing learning project. As I continue to explore MAUI, I plan to ad
 ## Acknowledgements	
 Special thanks to the Syncfusion team for providing the excellent MAUI controls that helped streamline the UI development process.
 Feel free to explore the code and contribute to the project. If you have any questions or suggestions, please don't hesitate to reach out.
+
+## PerView
+![mainpage](./mainpage.png)

@@ -69,7 +69,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <!--最新歌单-->
+                <!--banner-->
                 <cards:SfCardLayout Padding="5,10" 
                                     BindableLayout.ItemsSource="{Binding BannerList}"
                                     VisibleIndexChanged="SfCardLayout_VisibleIndexChanged"
@@ -109,26 +109,29 @@
                                       ScrollBarVisibility="Always"
                                       SelectionMode="None"
                                       Orientation="Horizontal" 
-                                      ItemSize="100"
+                                      ItemSize="104"
                                       HeightRequest="150"
                                        ItemSpacing="10">
                     <sfListView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="kw:RcmPlayListItem">
-                            <Grid RowSpacing="8">
+                            <Grid RowSpacing="5">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100" />
-                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="103" />
+                                    <RowDefinition Height="15" />
                                 </Grid.RowDefinitions>
-                                <Border x:Name="border"
-                                        Stroke="{AppThemeBinding Dark=#D0BCFF,Light=#6750A4}"
-                                        HorizontalOptions="Center">
+                                <Border Stroke="{AppThemeBinding Dark=#ccc,Light=#6750A4}"
+                                        StrokeThickness="1"
+                                        >
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="6" />
+                                        <RoundRectangle CornerRadius="5" />
                                     </Border.StrokeShape>
 
                                     <Image Source="{Binding Img}"
-                                           Aspect="AspectFill"
-                                           WidthRequest="100"/>
+                                           Aspect="AspectFit"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           WidthRequest="100"
+                                           HeightRequest="100"/>
                                 </Border>
                                 <Label Grid.Row="1"
                                        Text="{Binding Name}"
@@ -154,8 +157,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="kw:KWBangList">
                                 <Border StrokeShape="RoundRectangle 4"
-                                        Padding="5"
-                                        Margin="5"
+                                        Margin="0,0,5,0"
                                         BackgroundColor="#eee"
                                         WidthRequest="180"
                                         >
@@ -168,7 +170,7 @@
                                             <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="kw:MusicList">
                                                     <ViewCell>
-                                                        <Grid Padding="10">
+                                                        <Grid Padding="10" ColumnSpacing="5">
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="Auto" />
                                                                 <RowDefinition Height="Auto" />
