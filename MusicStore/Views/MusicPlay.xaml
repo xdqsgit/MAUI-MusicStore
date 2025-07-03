@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:tkcore="clr-namespace:CommunityToolkit.Maui.Core.Primitives;assembly=CommunityToolkit.Maui.MediaElement"
+             x:Class="MusicStore.Views.MusicPlay"
+             Title="MusicPlay">
+    <VerticalStackLayout>
+
+        <toolkit:MediaElement x:Name="mediaElement"
+                                  Source="https://er-sycdn.kuwo.cn/916397851fb268859179488efdd65384/686653b2/resource/30106/trackmedia/M5000040uYbR1AkIDA.mp3"
+                                  ShouldShowPlaybackControls="True"
+                                  />
+        <HorizontalStackLayout BindingContext="{x:Reference mediaElement}">
+            <Button Text="Play"
+                    HorizontalOptions="Center"
+                    Clicked="OnPlayPauseButtonClicked">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static tkcore:MediaElementState.Playing}">
+                        <Setter Property="Text"
+                                Value="Pause" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static tkcore:MediaElementState.Buffering}">
+                        <Setter Property="IsEnabled"
+                                Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Text="Stop"
+                    HorizontalOptions="Center"
+                    Clicked="OnStopButtonClicked">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static tkcore:MediaElementState.Stopped}">
+                        <Setter Property="IsEnabled"
+                                Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

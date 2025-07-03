@@ -15,6 +15,7 @@ namespace MusicStore
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitMediaElement()
                 .UseBarcodeReader()
                 .UseMauiCommunityToolkit()
 				.ConfigureSyncfusionToolkit()

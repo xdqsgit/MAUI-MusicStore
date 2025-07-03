@@ -108,6 +108,18 @@ namespace KWApi
             return result;
         }
 
+        
+        /// <summary>
+        /// 获取歌曲信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<BannerInfo>?> GetMusicInfoAsync(long musicId)
+        {
+            var url = $"{ApiUrl}/music/musicInfo?mid={musicId}&httpsStatus=1&reqId=f3457940-57e1-11f0-881d-fd59d2bf6e0d&plat=web_www&from=";
+            var result = await GetAsync<List<BannerInfo>>(url);
+            return result;
+        }
+
 
     }
 

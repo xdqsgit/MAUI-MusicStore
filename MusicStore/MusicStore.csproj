@@ -35,7 +35,7 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
@@ -74,6 +74,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="6.0.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
@@ -159,9 +160,24 @@
 	   <MauiXaml Update="Views\Login.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
+	   <MauiXaml Update="Views\MusicPlay.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </MauiXaml>
+	   <MauiXaml Update="Views\PlayListDetail.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </MauiXaml>
 	   <MauiXaml Update="Views\ZXingPage.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
+	 </ItemGroup>
+	
+	 <ItemGroup>
+	   <None Update="Views\MusicPlay.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </None>
+	   <None Update="Views\PlayListDetail.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </None>
 	 </ItemGroup>
 
 </Project>
