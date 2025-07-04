@@ -1,47 +1,120 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:tkcore="clr-namespace:CommunityToolkit.Maui.Core.Primitives;assembly=CommunityToolkit.Maui.MediaElement"
-             x:Class="MusicStore.Views.MusicPlay"
-             Title="MusicPlay">
-    <VerticalStackLayout>
+             xmlns:datatp="clr-namespace:MusicStore.DataTemplates"
+             x:Class="MusicStore.Views.MusicPlay">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="nowlyric">
+           <Label Text="{Binding Text}" ClassId="{Binding Order}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+        </DataTemplate>
+        <DataTemplate x:Key="lyric">
+            <Label Text="{Binding Text}"  ClassId="{Binding Order}" TextColor="Gray" HorizontalTextAlignment="Center"/>
+        </DataTemplate>
+        <datatp:LyriclistDataTemplateSelector x:Key="lyricDataTemplateSelector"
+                                          ValidTemplate="{StaticResource nowlyric}"
+                                          InvalidTemplate="{StaticResource lyric}" />
+    </ContentPage.Resources>
 
-        <toolkit:MediaElement x:Name="mediaElement"
-                                  Source="https://er-sycdn.kuwo.cn/916397851fb268859179488efdd65384/686653b2/resource/30106/trackmedia/M5000040uYbR1AkIDA.mp3"
-                                  ShouldShowPlaybackControls="True"
-                                  />
-        <HorizontalStackLayout BindingContext="{x:Reference mediaElement}">
-            <Button Text="Play"
-                    HorizontalOptions="Center"
-                    Clicked="OnPlayPauseButtonClicked">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button"
-                                 Binding="{Binding CurrentState}"
-                                 Value="{x:Static tkcore:MediaElementState.Playing}">
-                        <Setter Property="Text"
-                                Value="Pause" />
-                    </DataTrigger>
-                    <DataTrigger TargetType="Button"
-                                 Binding="{Binding CurrentState}"
-                                 Value="{x:Static tkcore:MediaElementState.Buffering}">
-                        <Setter Property="IsEnabled"
-                                Value="False" />
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-            <Button Text="Stop"
-                    HorizontalOptions="Center"
-                    Clicked="OnStopButtonClicked">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button"
-                                 Binding="{Binding CurrentState}"
-                                 Value="{x:Static tkcore:MediaElementState.Stopped}">
-                        <Setter Property="IsEnabled"
-                                Value="False" />
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+    <!-- 顶部状态栏 -->
+    <Grid RowDefinitions="50, *, 200" Padding="20" Background="#3e333333">
+        <!-- 顶部信息栏 -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="⟲" HorizontalOptions="Center" />
+            <Label Grid.Column="1" Text="音乐标题" HorizontalOptions="Center" FontSize="18" />
+            <Label Grid.Column="2" Text="⋯" HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- 中间播放信息 -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="240" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 艺术家信息 -->
+            <Label Grid.Row="0" Grid.Column="1" Text="艺术家" HorizontalOptions="Center" FontSize="14" Opacity="0.8" />
+
+            <!-- 圆形封面 -->
+
+            <Border Grid.Row="1" 
+                    Grid.Column="1" 
+                    WidthRequest="180" 
+                    HeightRequest="180" 
+                    StrokeShape="Ellipse"
+                    BackgroundColor="#eee" 
+                    >
+                <Border WidthRequest="150" 
+                        HeightRequest="150" 
+                        StrokeShape="Ellipse"
+                        BackgroundColor="White" 
+                        Padding="-1">
+                    <Image Source="avatar.png" Aspect="AspectFill" />
+                </Border>
+            </Border>
+
+            <!-- 歌词区域 -->
+            <ScrollView Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Never" Orientation="Vertical" Background="AliceBlue"  >
+                <VerticalStackLayout x:Name="LyricList"
+                    BindableLayout.ItemTemplateSelector="{StaticResource lyricDataTemplateSelector}"  />
+            </ScrollView>
+        </Grid>
+
+        <!-- 底部控制栏 -->
+        <Grid Grid.Row="2"  RowDefinitions="*,*,45" HorizontalOptions="Fill">
+            <!-- 播放进度 -->
+            <FlexLayout Direction="Row" JustifyContent="SpaceBetween" >
+                <Label x:Name="CurrentTimeLabel" Text="0:00" FontSize="12" WidthRequest="40" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                <Slider x:Name="ProgressSlider"  FlexLayout.Grow="1"
+                        Maximum="100" Value="0" 
+                        VerticalOptions="Center"
+                        BackgroundColor="#eee"
+                        ThumbColor="Green"
+                        MinimumTrackColor="LightGreen"
+                        DragCompleted="OnProgressChanged"
+                        />
+                <Label x:Name="DurationLabel" Text="0:00" FontSize="12" WidthRequest="40" 
+                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <toolkit:MediaElement x:Name="mediaElement" IsVisible="False" />
+            </FlexLayout>
+
+            <!-- 中间播放按钮 -->
+            <Grid Grid.Row="1" ColumnDefinitions="*, 65, *" >
+                <Button  Grid.Column="0" 
+                         Text="↺"
+                         HeightRequest="30"
+                         Background="Transparent"
+                         Clicked="OnPreviousClicked" />
+                <Border Grid.Column="1" Background="#ddd" StrokeShape="Ellipse" HeightRequest="65" WidthRequest="65">
+
+                    <Button x:Name="PlayPauseButton"
+                            Text="▶" 
+                            WidthRequest="50" 
+                            HeightRequest="50"                             
+                            BackgroundColor="White" 
+                            CornerRadius="25" 
+                            Clicked="OnPlayPauseClicked"
+                            />
+                </Border>
+                <Button Grid.Column="2" Text="↻" HeightRequest="30" Background="Transparent" />
+            </Grid>
+
+            <!-- 右侧控制按钮 -->
+            <Grid Grid.Row="2" Grid.Column="2"  ColumnDefinitions="*, *, *" >
+                <Button Grid.Column="0" Text="≡" WidthRequest="30"  Background="Transparent"/>
+                <Button Grid.Column="1" Text="♡" WidthRequest="30"  Background="Transparent"/>
+                <Button Grid.Column="2" Text="✉" WidthRequest="30" Background="Transparent" />
+            </Grid>
+        </Grid>
+    </Grid>
 </ContentPage>

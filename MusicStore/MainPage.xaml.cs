@@ -30,6 +30,10 @@ namespace MusicStore
                 sfCardLayout.VisibleIndex = 0;
             }
         }
+        public void BangList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+        }
     }
 
 }
