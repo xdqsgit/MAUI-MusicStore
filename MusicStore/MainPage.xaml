@@ -70,33 +70,25 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <!--banner-->
-                <cards:SfCardLayout Padding="5,10" 
-                                    BindableLayout.ItemsSource="{Binding BannerList}"
-                                    VisibleIndexChanged="SfCardLayout_VisibleIndexChanged"
-                                    Shadow="#ccc 4 4"
-                                    HeightRequest="240"
-                                    >
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="kw:BannerInfo">
-                            <cards:SfCardView BackgroundColor="#fff" >
-                                <Grid RowDefinitions="3*,1.3*">
+                
+                    <CarouselView x:Name="carouselView" ItemsSource="{Binding BannerList}"
+                                  PeekAreaInsets="35"
+                                  Shadow="#ccc 4 4" 
+                                  HeightRequest="240">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="kw:BannerInfo">
+                                <VerticalStackLayout >
                                     <Image Source="{Binding NewPic}"
-                                           Aspect="AspectFill"
-                                           HeightRequest="240"
-                                       />
-                                    <Label Grid.Row="1"
-                                           VerticalOptions="End"
-                                           Padding="5,5"
-                                           Text="{Binding NewPicText}"
+                                               Aspect="AspectFit"
+                                               HeightRequest="220"
                                            />
-
-                                </Grid>
-
-                            </cards:SfCardView>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </cards:SfCardLayout>
-
+                                    <Label HorizontalOptions="Center"
+                                           Text="{Binding NewPicText}"                                           
+                                           />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
                 <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10" Margin="0,-20" >
                     <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
                     <c:FeatureView Title="歌单" ImageSource="playlist.png" />
@@ -114,8 +106,8 @@
                                        ItemSpacing="10">
                     <sfListView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="kw:RcmPlayListItem">
-                            
-                            <Grid RowSpacing="5">                                
+
+                            <Grid RowSpacing="5">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="103" />
                                     <RowDefinition Height="15" />
@@ -149,7 +141,7 @@
                         </DataTemplate>
                     </sfListView:SfListView.ItemTemplate>
                 </sfListView:SfListView>
-                
+
                 <ScrollView Orientation="Horizontal">
                     <FlexLayout JustifyContent="SpaceEvenly"                                 
                             Direction="Row"                            

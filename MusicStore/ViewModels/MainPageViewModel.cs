@@ -15,7 +15,19 @@ namespace MusicStore.ViewModel
     public partial class MainPageViewModel : ObservableObject
     {
         KWApIHelper KWApIHelper;
+        [ObservableProperty]
+        private ObservableCollection<BannerInfo> bannerList = new ObservableCollection<BannerInfo>();
 
+        [ObservableProperty]
+        private ObservableCollection<RcmPlayListItem> dayRmcList = new ObservableCollection<RcmPlayListItem>();
+
+        [ObservableProperty]
+        private ObservableCollection<KWBangList> bangList = new ObservableCollection<KWBangList>();
+
+        [ObservableProperty]
+        private bool isSearchResultVisible;
+        [ObservableProperty]
+        ObservableCollection<ListData>? searchResult;
         public MainPageViewModel(KWApIHelper kWApIHelper)
         {
             KWApIHelper = kWApIHelper;
@@ -65,17 +77,6 @@ namespace MusicStore.ViewModel
             new ListData("cdele"),
             new ListData("Ddele"),
         };
-        [ObservableProperty]
-        private ObservableCollection<BannerInfo> bannerList = new ObservableCollection<BannerInfo>();
-
-        [ObservableProperty]
-        private ObservableCollection<RcmPlayListItem> dayRmcList = new ObservableCollection<RcmPlayListItem>();
-
-        [ObservableProperty]
-        private ObservableCollection<KWBangList> bangList = new ObservableCollection<KWBangList>();
-
-        [ObservableProperty]
-        private bool isSearchResultVisible;
 
         [RelayCommand]
         void ShowShell()
@@ -83,8 +84,7 @@ namespace MusicStore.ViewModel
             Shell.Current.FlyoutIsPresented = true;
         }
 
-        [ObservableProperty]
-        ObservableCollection<ListData>? searchResult;
+
         [RelayCommand]
         void Search(string searchText)
         {
