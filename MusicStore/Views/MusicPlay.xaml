@@ -84,8 +84,7 @@
                         DragCompleted="OnProgressChanged"
                         />
                 <Label x:Name="DurationLabel" Text="0:00" FontSize="12" WidthRequest="40" 
-                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                <toolkit:MediaElement x:Name="mediaElement" IsVisible="False" />
+                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>                
             </FlexLayout>
 
             <!-- 中间播放按钮 -->

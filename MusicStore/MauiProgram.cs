@@ -2,6 +2,7 @@ using CommunityToolkit.Maui;
 using KWApi;
 using Microsoft.Extensions.Logging;
 using MusicStore.ViewModel;
+using Plugin.Maui.Audio;
 using Syncfusion.Maui.Core.Hosting;
 
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -18,6 +19,7 @@ namespace MusicStore
                 .UseMauiCommunityToolkitMediaElement()
                 .UseBarcodeReader()
                 .UseMauiCommunityToolkit()
+                .AddAudio()
 				.ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
@@ -30,7 +32,7 @@ namespace MusicStore
                     fonts.AddFont("Dashboard.ttf", "DashboardFontIcons");
                 });
             //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF1cWWhPYVFwWmFZfVtgdVVMZFtbRn5PIiBoS35Rc0VlWHZccnBSRGhcUUN/VEBU");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JEaF5cXmRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXhed3RRRGhcUURyWUZWYEk=");
 
 #if DEBUG
     		builder.Logging.AddDebug();
