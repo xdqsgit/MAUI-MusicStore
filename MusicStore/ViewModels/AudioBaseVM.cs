@@ -8,7 +8,7 @@ using Plugin.Maui.Audio;
 
 namespace MusicStore.ViewModels
 {
-    public abstract partial class MusicPlayBaseVM : ObservableObject
+    public abstract partial class AudioBaseVM : ObservableObject
     {
         /// <summary>
         /// 当前播放音乐
@@ -43,7 +43,7 @@ namespace MusicStore.ViewModels
 
         KWApIHelper kWApIHelper;
         IAudioPlayer audioPlayer;
-        public MusicPlayBaseVM(KWApIHelper kWApIHelper)
+        public AudioBaseVM(KWApIHelper kWApIHelper)
         {
             audioPlayer = MusicPlayerManagerService.Instance.AudioPlayer;
             DurationSeconds = audioPlayer.Duration;
@@ -138,7 +138,7 @@ namespace MusicStore.ViewModels
             }
             
             CurrentMusicInfo = MusicQueue[index];
-            LoadMusicSource(CurrentMusicInfo);
+            LoadMusicSourceAsync(CurrentMusicInfo);
             LoadLyrics(CurrentMusicInfo);            
         }
 
@@ -147,9 +147,9 @@ namespace MusicStore.ViewModels
             throw new NotImplementedException();
         }
 
-        private void LoadMusicSource(PlayListItem currentMusicInfo)
+        private async Task LoadMusicSourceAsync(PlayListItem currentMusicInfo)
         {
-            kWApIHelper.get
+            var url = await kWApIHelper.GetPlayUrlAsync(currentMusicInfo.Id);
         }
 
         private void UpdateCurrentPosition()

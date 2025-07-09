@@ -11,7 +11,7 @@ public partial class MusicPlay : ContentPage
 {
     public List<Lyric> Lyrics { get; set; }= new List<Lyric>();
     MediaElement mediaElement;
-    public MusicPlay(MusicPlayBaseVM vm)
+    public MusicPlay(AudioBaseVM vm)
     {
         InitializeComponent();
         BindingContext = vm;
