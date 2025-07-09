@@ -27,20 +27,20 @@ namespace MusicStore.Service
             AudioPlayer = AudioManager.Current.CreatePlayer();            
         }
 
-        public int CurrentMusicIndex { get; private set; }
+        public int CurrentMusicIndex { get;  set; }
         /// <summary>
         /// 歌单信息
         /// </summary>
-        public PlayList PlayList{ get;private set; }
+        public PlayList PlayList{ get; set; }
         /// <summary>
         /// 歌曲列表
         /// </summary>
-        public List<PlayListItem> PlayListItems { get; private set; }
+        public List<PlayListItem> PlayListItems { get;  set; }
         /// <summary>
         /// 当前歌词
         /// </summary>
-        public List<Lyric>? CurrentLyrics { get; private set; }
-        public PlayListItem? CurrentMusicInfo { get; private set; }
-        public List<PlayListItem>? MusicQueue { get; private set; }
+        public List<Lyric>? CurrentLyrics { get;  set; }
+        public PlayListItem? CurrentMusicInfo { get;  set; }
+        public List<PlayListItem>? MusicQueue { get;  set; }
     }
 }

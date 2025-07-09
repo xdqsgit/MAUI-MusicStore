@@ -54,7 +54,7 @@
                                SearchCommandParameter="{Binding Text,x:DataType='SearchBar',Source={x:Reference search}}"
                                />
                     </Border>
-                    <Button Grid.Column="2" Text="🎼"  Background="Transparent" 
+                    <Button Grid.Column="2" Text="🎵"  Background="Transparent" 
                         HeightRequest="50"
                         WidthRequest="50"/>
                 </Grid>
@@ -70,25 +70,25 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <!--banner-->
-                
-                    <CarouselView x:Name="carouselView" ItemsSource="{Binding BannerList}"
+
+                <CarouselView x:Name="carouselView" ItemsSource="{Binding BannerList}"
                                   PeekAreaInsets="35"
                                   Shadow="#ccc 4 4" 
                                   HeightRequest="240">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="kw:BannerInfo">
-                                <VerticalStackLayout >
-                                    <Image Source="{Binding NewPic}"
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="kw:BannerInfo">
+                            <VerticalStackLayout >
+                                <Image Source="{Binding NewPic}"
                                                Aspect="AspectFit"
                                                HeightRequest="220"
                                            />
-                                    <Label HorizontalOptions="Center"
+                                <Label HorizontalOptions="Center"
                                            Text="{Binding NewPicText}"                                           
                                            />
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
                 <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10" Margin="0,-20" >
                     <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
                     <c:FeatureView Title="歌单" ImageSource="playlist.png" />
@@ -160,36 +160,39 @@
                                         <Label Text="{Binding Name} " 
                                                FontAttributes="Bold"
                                                HorizontalOptions="Center"/>
-                                        <ListView ItemsSource="{Binding MusicList}" ItemSelected="BangList_ItemSelected">
-                                            <ListView.ItemTemplate>
+                                        <CollectionView SelectionMode="Single"
+                                            ItemsSource="{Binding MusicList}" 
+                                                        SelectedItem="{Binding SelectedBangItem, Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}}"
+                                                        SelectionChangedCommand="{Binding BangItemSelectedCommand,Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}}"
+                                                        SelectionChangedCommandParameter="{Binding .}"
+                                                        >
+                                            <CollectionView.ItemTemplate>
                                                 <DataTemplate x:DataType="kw:MusicList">
-                                                    <ViewCell>
-                                                        <Grid Padding="10" ColumnSpacing="5">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                            </Grid.ColumnDefinitions>
-                                                            <Image Grid.RowSpan="2"
+                                                    <Grid Padding="10" ColumnSpacing="5">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Grid.RowSpan="2"
                                                                    Source="{Binding Pic120}"
                                                                    Aspect="AspectFill"
                                                                    HeightRequest="40"
                                                                    WidthRequest="40" />
-                                                            <Label Grid.Column="1"
+                                                        <Label Grid.Column="1"
                                                                    Text="{Binding Artist}"
                                                                    />
-                                                            <Label Grid.Row="1"
+                                                        <Label Grid.Row="1"
                                                                    Grid.Column="1"
                                                                    Text="{Binding Name}"
                                                                    VerticalOptions="End" />
-                                                        </Grid>
-                                                    </ViewCell>
+                                                    </Grid>
                                                 </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
                                     </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>

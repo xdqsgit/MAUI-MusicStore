@@ -2,6 +2,8 @@ using CommunityToolkit.Maui;
 using KWApi;
 using Microsoft.Extensions.Logging;
 using MusicStore.ViewModel;
+using MusicStore.ViewModels;
+using MusicStore.Views;
 using Plugin.Maui.Audio;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -32,16 +34,19 @@ namespace MusicStore
                     fonts.AddFont("Dashboard.ttf", "DashboardFontIcons");
                 });
             //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JEaF5cXmRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXhed3RRRGhcUURyWUZWYEk=");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzk0MjIzMkAzMzMwMmUzMDJlMzAzYjMzMzAzYkFnZFJGNkw0eUZidWxINzdlQ2Yrc2dremtOQXdxd0l0MjFIQlhOUFNWL3M9");
 
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
 
             builder.Services.AddSingleton<KWApIHelper>();
+
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MusicPlay>();
 
             builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<MusicPalyVM>();
 
             return builder.Build();
         }

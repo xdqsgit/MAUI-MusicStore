@@ -9,7 +9,7 @@ namespace MusicStore.Model
     public class Lyric
     {
         public int Order { get; set; }
-        public float Time { get; set; }
+        public double Time { get; set; }
         public string Text { get; set; }="";
     }
 }

@@ -2,10 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:datatp="clr-namespace:MusicStore.DataTemplates"
-             x:Class="MusicStore.Views.MusicPlay">
+             xmlns:vm="clr-namespace:MusicStore.ViewModels"
+             xmlns:cv="clr-namespace:MusicStore.Converter"             
+             x:Class="MusicStore.Views.MusicPlay"
+             x:DataType="vm:MusicPalyVM"
+             >
+    <Shell.TitleColor >
+        <Color>GreenYellow</Color>
+    </Shell.TitleColor>
     <ContentPage.Resources>
+        <cv:SecondToStringConverter x:Key="secondToStringConverter" />
         <DataTemplate x:Key="nowlyric">
-           <Label Text="{Binding Text}" ClassId="{Binding Order}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Text}" ClassId="{Binding Order}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
         </DataTemplate>
         <DataTemplate x:Key="lyric">
             <Label Text="{Binding Text}"  ClassId="{Binding Order}" TextColor="Gray" HorizontalTextAlignment="Center"/>
@@ -25,7 +33,7 @@
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="⟲" HorizontalOptions="Center" />
-            <Label Grid.Column="1" Text="音乐标题" HorizontalOptions="Center" FontSize="18" />
+            <Label Grid.Column="1" Text="{Binding CurrentMusicInfo.Name}" HorizontalOptions="Center" FontSize="18" />
             <Label Grid.Column="2" Text="⋯" HorizontalOptions="Center" />
         </Grid>
 
@@ -43,7 +51,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- 艺术家信息 -->
-            <Label Grid.Row="0" Grid.Column="1" Text="艺术家" HorizontalOptions="Center" FontSize="14" Opacity="0.8" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentMusicInfo.Album}" HorizontalOptions="Center" FontSize="14" Opacity="0.8" />
 
             <!-- 圆形封面 -->
 
@@ -64,9 +72,21 @@
             </Border>
 
             <!-- 歌词区域 -->
-            <ScrollView Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Never" Orientation="Vertical" Background="AliceBlue"  >
-                <VerticalStackLayout x:Name="LyricList"
-                    BindableLayout.ItemTemplateSelector="{StaticResource lyricDataTemplateSelector}"  />
+            <ScrollView x:Name="LyricScrollView"  
+                        Grid.Row="2" 
+                        Grid.Column="1" 
+                        VerticalScrollBarVisibility="Never" 
+                        Orientation="Vertical" 
+                        Background="AliceBlue"  >
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentLyrics}"
+                                     BindableLayout.ItemTemplateSelector="{StaticResource lyricDataTemplateSelector}"  
+                                     >
+                    <BindableLayout.EmptyViewTemplate>
+                        <DataTemplate>
+                            <Label Text="暂无歌词" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </DataTemplate>
+                    </BindableLayout.EmptyViewTemplate>
+                </VerticalStackLayout>
             </ScrollView>
         </Grid>
 
@@ -74,45 +94,62 @@
         <Grid Grid.Row="2"  RowDefinitions="*,*,45" HorizontalOptions="Fill">
             <!-- 播放进度 -->
             <FlexLayout Direction="Row" JustifyContent="SpaceBetween" >
-                <Label x:Name="CurrentTimeLabel" Text="0:00" FontSize="12" WidthRequest="40" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                <Label x:Name="CurrentTimeLabel" 
+                       Text="{Binding CurrentSeconds,Converter={StaticResource secondToStringConverter}}"
+                       FontSize="12" 
+                       WidthRequest="40" 
+                       VerticalTextAlignment="Center" 
+                       HorizontalTextAlignment="Center" />
                 <Slider x:Name="ProgressSlider"  FlexLayout.Grow="1"
-                        Maximum="100" Value="0" 
+                        Maximum="{Binding DurationSeconds}" 
+                        Value="{Binding CurrentSeconds}"
                         VerticalOptions="Center"
                         BackgroundColor="#eee"
                         ThumbColor="Green"
                         MinimumTrackColor="LightGreen"
-                        DragCompleted="OnProgressChanged"
+                        DragCompletedCommand="{Binding SliderDragCompletedCommand}"
                         />
-                <Label x:Name="DurationLabel" Text="0:00" FontSize="12" WidthRequest="40" 
-                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>                
+                <Label x:Name="DurationLabel" 
+                       Text="{Binding DurationSeconds,Converter={StaticResource secondToStringConverter}}" 
+                       FontSize="12" 
+                       WidthRequest="40" 
+                       VerticalTextAlignment="Center" 
+                       HorizontalTextAlignment="Center"/>
             </FlexLayout>
 
             <!-- 中间播放按钮 -->
             <Grid Grid.Row="1" ColumnDefinitions="*, 65, *" >
                 <Button  Grid.Column="0" 
-                         Text="↺"
+                         Text="⏮️"
                          HeightRequest="30"
                          Background="Transparent"
-                         Clicked="OnPreviousClicked" />
+                         Command="{Binding PlayLastMusicCommand}"
+                         />
                 <Border Grid.Column="1" Background="#ddd" StrokeShape="Ellipse" HeightRequest="65" WidthRequest="65">
 
                     <Button x:Name="PlayPauseButton"
-                            Text="▶" 
+                            Text="▶️"
                             WidthRequest="50" 
                             HeightRequest="50"                             
                             BackgroundColor="White" 
                             CornerRadius="25" 
-                            Clicked="OnPlayPauseClicked"
-                            />
+                            Command="{Binding PlayOrPauseCommand}"
+                            >
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="False">
+                                <Setter Property="Text" Value="⏸️"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
                 </Border>
-                <Button Grid.Column="2" Text="↻" HeightRequest="30" Background="Transparent" />
+                <Button Grid.Column="2" Text="⏭️"  HeightRequest="30" Background="Transparent" Command="{Binding PlayNextMusicCommand}" />
             </Grid>
 
             <!-- 右侧控制按钮 -->
             <Grid Grid.Row="2" Grid.Column="2"  ColumnDefinitions="*, *, *" >
-                <Button Grid.Column="0" Text="≡" WidthRequest="30"  Background="Transparent"/>
-                <Button Grid.Column="1" Text="♡" WidthRequest="30"  Background="Transparent"/>
-                <Button Grid.Column="2" Text="✉" WidthRequest="30" Background="Transparent" />
+                <Button Grid.Column="0" Text="⩸" WidthRequest="30"  Background="Transparent"/>
+                <Button Grid.Column="1" Text="♥️" WidthRequest="30"  Background="Transparent"/>
+                <Button Grid.Column="2" Text="🗨️" WidthRequest="30" Background="Transparent" />
             </Grid>
         </Grid>
     </Grid>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,10 +10,12 @@ using CommunityToolkit.Mvvm.Input;
 using KWApi;
 using KWApi.Models;
 using MusicStore.Model;
+using MusicStore.Service;
+using MusicStore.ViewModels;
 
 namespace MusicStore.ViewModel
 {
-    public partial class MainPageViewModel : ObservableObject
+    public partial class MainPageViewModel : AudioBaseVM
     {
         KWApIHelper KWApIHelper;
         [ObservableProperty]
@@ -28,7 +31,12 @@ namespace MusicStore.ViewModel
         private bool isSearchResultVisible;
         [ObservableProperty]
         ObservableCollection<ListData>? searchResult;
-        public MainPageViewModel(KWApIHelper kWApIHelper)
+        /// <summary>
+        /// 选中的榜单歌曲
+        /// </summary>
+        [ObservableProperty]
+        MusicList? selectedBangItem;
+        public MainPageViewModel(KWApIHelper kWApIHelper):base(kWApIHelper)
         {
             KWApIHelper = kWApIHelper;
             LoadData();
@@ -53,7 +61,7 @@ namespace MusicStore.ViewModel
         public async void LoadBanner()
         {
             var banners = await KWApIHelper.GetBannerListAsync();
-            if (banners != null && banners!= null)
+            if (banners != null && banners != null)
             {
                 BannerList = new ObservableCollection<BannerInfo>(banners.Skip(2));
             }
@@ -93,5 +101,34 @@ namespace MusicStore.ViewModel
             IsSearchResultVisible = true;
         }
 
+        [RelayCommand]
+        async Task BangItemSelectedAsync(KWBangList selectedItem)
+        {
+            Console.WriteLine("selected " + selectedBangItem.Musicrid);
+
+            //设置播放列表 和 当前播放歌曲
+            //跳转到播放界面
+            MusicPlayerManagerService.Instance.MusicQueue = selectedItem.MusicList.Select(r => new PlayListItem
+            {
+                Album = r.Album,
+                Artist = r.Artist,
+                Id = r.Musicrid,
+                Name = r.Name,
+                Pic = r.Pic,
+                Duration = r.Duration
+            }).ToList();
+
+            MusicPlayerManagerService.Instance.CurrentMusicInfo = new PlayListItem
+            {
+                Album = selectedBangItem.Album,
+                Artist = selectedBangItem.Artist,
+                Id = selectedBangItem.Musicrid,
+                Name = selectedBangItem.Name,
+                Pic = selectedBangItem.Pic,
+                Duration = selectedBangItem.Duration
+            };
+
+            await PlayCurrentMusic();
+        }
     }
 }

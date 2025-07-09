@@ -113,7 +113,7 @@ namespace KWApi
         /// 获取歌曲信息
         /// </summary>
         /// <returns></returns>
-        public async Task<MusicInfo?> GetMusicInfoAsync(long musicId)
+        public async Task<MusicInfo?> GetMusicInfoAsync(string musicId)
         {
             var url = $"{ApiUrl}/music/musicInfo?mid={musicId}&httpsStatus=1&reqId=f3457940-57e1-11f0-881d-fd59d2bf6e0d&plat=web_www&from=";
             var result = await GetAsync<MusicInfo>(url);
@@ -124,7 +124,7 @@ namespace KWApi
         /// 获取歌曲播放地址
         /// </summary>
         /// <returns></returns>
-        public async Task<PlayUrl?> GetPlayUrlAsync(long musicId)
+        public async Task<PlayUrl?> GetPlayUrlAsync(string musicId)
         {
             var url = $"{ApiUrl}/music/playUrl?mid={musicId}&type=music&httpsStatus=1&reqId=b73681d1-5be0-11f0-b63c-e3b754600bd5&plat=web_www&from=";
             var result = await GetAsync<PlayUrl>(url);
@@ -135,7 +135,7 @@ namespace KWApi
         /// 获取歌词
         /// </summary>
         /// <returns></returns>
-        public async Task<KWLrclist?> GetLyricAsync(long musicId)
+        public async Task<KWLrclist?> GetLyricAsync(string musicId)
         {
             var url = $"https://www.kuwo.cn/openapi/v1/www/lyric/getlyric?musicId={musicId}&httpsStatus=1&reqId=43a32560-5be1-11f0-8c82-a5b4634c4002&plat=web_www&from=";
             var result = await GetAsync<KWLrclist>(url);
