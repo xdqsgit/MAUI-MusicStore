@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using KWApi;
@@ -11,20 +13,31 @@ namespace MusicStore.ViewModels
 {
     public abstract partial class AudioBaseVM : ObservableObject
     {
-
         /// <summary>
         /// 当前播放音乐
         /// </summary>
         [ObservableProperty]
         PlayListItem? currentMusicInfo;
         /// <summary>
-        /// 当前播放歌曲歌词
+        /// 当前榜单
+        /// </summary>
+        [ObservableProperty]
+        PlayList? currentPlayList;
+        /// <summary>
+        /// 当前播放歌曲歌词全文
         /// </summary>        
         public ObservableCollection<Lyric>? CurrentLyrics { get; set; }
         /// <summary>
+        /// 当前播放歌词
+        /// </summary>
+        [ObservableProperty]
+        Lyric? currentLyric; 
+        /// <summary>
         /// 当前播放列表
         /// </summary>
-        public ObservableCollection<PlayListItem>? MusicQueue { get; set; }
+        public ObservableCollection<PlayListItem>? CurrentMusicQueue { get; set; }
+
+
         /// <summary>
         /// 当前播放索引
         /// </summary>
@@ -44,6 +57,32 @@ namespace MusicStore.ViewModels
         /// </summary>
         [ObservableProperty]
         double currentSeconds;
+        /// <summary>
+        /// 是否有待播放音乐
+        /// </summary>
+        [ObservableProperty]
+        bool hasMusic;
+
+        partial void OnCurrentMusicIndexChanged(int val)
+        {
+            MusicPlayerManagerService.Instance.CurrentMusicIndex = val;
+        }
+
+        partial void OnCurrentMusicInfoChanged(PlayListItem val)
+        {
+            MusicPlayerManagerService.Instance.CurrentMusicInfo = val;
+            HasMusic = (val != null);
+        }
+
+        partial void OnCurrentPlayListChanged(PlayList val)
+        {
+            MusicPlayerManagerService.Instance.CurrentPlayList = val;
+        }
+
+        partial void OnIsPlayingChanged(bool value)
+        {
+            MusicPlayerManagerService.Instance.IsPlaying = value;
+        }
 
         KWApIHelper kWApIHelper;
         IAudioPlayer audioPlayer;
@@ -52,85 +91,78 @@ namespace MusicStore.ViewModels
             audioPlayer = MusicPlayerManagerService.Instance.AudioPlayer;
             DurationSeconds = audioPlayer.Duration;
             CurrentMusicIndex = MusicPlayerManagerService.Instance.CurrentMusicIndex;
-            if (audioPlayer.IsPlaying)
-            {
-                UpdateCurrentPosition();
-            }
+            //if (audioPlayer.IsPlaying)
+            //{
+            //    UpdateCurrentPosition();
+            //}
             if (MusicPlayerManagerService.Instance.CurrentMusicInfo != null)
             {
                 CurrentMusicInfo = MusicPlayerManagerService.Instance.CurrentMusicInfo;
             }
             if (MusicPlayerManagerService.Instance.MusicQueue != null)
             {
-                MusicQueue = new ObservableCollection<PlayListItem>(MusicPlayerManagerService.Instance.MusicQueue);
+                CurrentMusicQueue = new ObservableCollection<PlayListItem>(MusicPlayerManagerService.Instance.MusicQueue);
             }
             if (MusicPlayerManagerService.Instance.CurrentLyrics != null)
             {
                 CurrentLyrics = new ObservableCollection<Lyric>(MusicPlayerManagerService.Instance.CurrentLyrics);
             }
-
-
-            CurrentLyrics =
-            [
-                new Lyric { Time = 0, Text = "热爱105°C的你 - 阿肆" },
-                new Lyric { Time = 0.1f, Text = "词：阿肆" },
-                new Lyric { Time = 0.54f, Text = "混音室：唐汉霄工作室" },
-                new Lyric { Time = 0.73f, Text = "Super Idol的笑容" },
-                new Lyric { Time = 2.26f, Text = "都没你的甜" },
-                new Lyric { Time = 4.02f, Text = "八月正午的阳光" },
-                new Lyric { Time = 5.86f, Text = "都没你耀眼" },
-                new Lyric { Time = 7.53f, Text = "热爱 105 °C的你" },
-                new Lyric { Time = 10.11f, Text = "滴滴清纯的蒸馏水" },
-            ];
+            IsPlaying = MusicPlayerManagerService.Instance.IsPlaying;
+ 
             this.kWApIHelper = kWApIHelper;
 
-            //订阅列表切换事件
-            //上一曲 下一曲事件
+            if (IsPlaying)
+            {
+                UpdateCurrentPositionAsync();
+            }
         }
-        //public async Task PlayAudioAsync()
-        //{
-        //    var file = await FileSystem.OpenAppPackageFileAsync("ukelele.mp3");
-        //    audioPlayer.SetSource(file);
-        //    audioPlayer.Play();
 
-        //}
-
-
-        async Task<Stream> LoadFromUrlAsync(string url)
+        async Task<Stream?> LoadFromUrlAsync(string url)
         {
-            using var httpClient = new HttpClient();
-            var stream = await httpClient.GetStreamAsync(url);
-            return stream;
+            try
+            {
+                using var httpClient = new HttpClient();
+                var httpResponse = await httpClient.GetAsync(url);
+                httpResponse.EnsureSuccessStatusCode();
+                string cacheDir = FileSystem.Current.CacheDirectory;
+                var fileName = Path.Combine(cacheDir, CurrentMusicInfo.Id + ".mp3");
+                await File.WriteAllBytesAsync(fileName, await httpResponse.Content.ReadAsByteArrayAsync());
+                //保存成功
+                return new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         /// <summary>
         /// 播放 或暂停
         /// </summary>
         /// <returns></returns>
         [RelayCommand]
-        async void PlayOrPause()
+        async Task PlayOrPause()
         {
             if (audioPlayer.IsPlaying)
             {
                 audioPlayer.Pause();
+                IsPlaying = false;
             }
             else
             {
-                if (audioPlayer.Duration > 0)
-                {
-                    audioPlayer.Play();
-                }
                 audioPlayer.Play();
+                IsPlaying = true;
                 DurationSeconds = audioPlayer.Duration;
-                UpdateCurrentPosition();
+                UpdateCurrentPositionAsync();
             }
         }
         //下一曲
         [RelayCommand]
         void PlayNextMusic()
         {
-            if (MusicQueue != null && MusicQueue.Count > 1)
+            if (CurrentMusicQueue != null && CurrentMusicQueue.Count > 1)
             {
-                if (CurrentMusicIndex + 1 < MusicQueue.Count - 1)
+                if (CurrentMusicIndex + 1 < CurrentMusicQueue.Count - 1)
                 {
                     CurrentMusicIndex++;
                     //todo 加载歌曲
@@ -142,7 +174,7 @@ namespace MusicStore.ViewModels
         [RelayCommand]
         void PlayLastMusic()
         {
-            if (MusicQueue != null && MusicQueue.Count > 1)
+            if (CurrentMusicQueue != null && CurrentMusicQueue.Count > 1)
             {
                 if (CurrentMusicIndex - 1 >= 0)
                 {
@@ -162,9 +194,17 @@ namespace MusicStore.ViewModels
                     audioPlayer.Seek(CurrentSeconds);
             }
         }
+
+        [RelayCommand]
+        async Task ShowMusicDetailAsync()
+        {
+            await Shell.Current.GoToAsync("//MusicPlay", true);
+        }
+
+
         protected virtual async void PlayByIndex(int index)
         {
-            CurrentMusicInfo = MusicQueue[index];
+            CurrentMusicInfo = CurrentMusicQueue[index];
             await PlayCurrentMusic();
         }
         protected virtual async Task PlayCurrentMusic()
@@ -176,10 +216,10 @@ namespace MusicStore.ViewModels
 
             await LoadMusicSourceAsync(CurrentMusicInfo);
             await LoadLyrics(CurrentMusicInfo);
-
+            await Task.Delay(50);
             audioPlayer.Play();
             DurationSeconds = audioPlayer.Duration;
-            UpdateCurrentPosition();
+            UpdateCurrentPositionAsync();
         }
 
         private async Task LoadLyrics(PlayListItem currentMusicInfo)
@@ -195,45 +235,65 @@ namespace MusicStore.ViewModels
 
                 });
                 CurrentLyrics = new ObservableCollection<Lyric>(list);
+                MusicPlayerManagerService.Instance.CurrentLyrics = list.ToList();
             }
             else
             {
                 CurrentLyrics = new ObservableCollection<Lyric>();
+                MusicPlayerManagerService.Instance.CurrentLyrics = new List<Lyric>();
             }
+
         }
 
         private async Task LoadMusicSourceAsync(PlayListItem currentMusicInfo)
         {
-            var playInfo = await kWApIHelper.GetPlayUrlAsync(currentMusicInfo.Id);
-            if (playInfo != null)
+            //先在本地查找
+            Stream? stream = null;
+            var fileName = Path.Combine(FileSystem.CacheDirectory, CurrentMusicInfo.Id + ".mp3");
+            if (File.Exists(fileName))
             {
-                var stream = await LoadFromUrlAsync(playInfo.Url ?? "");
-                if (stream != null)
-                {
-                    audioPlayer.SetSource(stream);
-                }
+                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             }
             else
             {
-                audioPlayer.SetSource(new MemoryStream());
+                var playInfo = await kWApIHelper.GetPlayUrlAsync(currentMusicInfo.Id);
+                if (playInfo != null)
+                {
+                    stream = await LoadFromUrlAsync(playInfo.Url ?? "");
+                }
             }
+            audioPlayer.SetSource(stream ?? new MemoryStream());
         }
-
-        private void UpdateCurrentPosition()
+        protected async void UpdateCurrentPositionAsync()
         {
+            await Task.Delay(180);
+
             if (!audioPlayer.IsPlaying)
             {
-#if WINDOWS
-                Thread.Sleep(50);
-#endif
                 if (!audioPlayer.IsPlaying)
                 {
                     IsPlaying = audioPlayer.IsPlaying;
                     return;
                 }
             }
+
             IsPlaying = audioPlayer.IsPlaying;
             CurrentSeconds = audioPlayer.CurrentPosition;
+
+            if(CurrentLyrics != null && CurrentLyrics.Count > 0)
+            {
+                var lyrc=CurrentLyrics.LastOrDefault(o => o.Time <= CurrentSeconds);
+                if (lyrc != null)
+                {
+                    CurrentLyric = lyrc;
+                }
+            }
+
+            if (CurrentSeconds >= DurationSeconds)
+            {
+                return;
+            }
+            Task.Run(() => UpdateCurrentPositionAsync());
         }
     }
 }

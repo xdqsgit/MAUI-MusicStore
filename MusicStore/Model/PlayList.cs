@@ -8,11 +8,11 @@ namespace MusicStore.Model
 {
     public class PlayList
     {
-        public string Name { get; set; }
-        public string Album { get; set; }
-        public string Pic { get; set; }
+        public string? Name { get; set; }
+        public string? Album { get; set; }
+        public string? Pic { get; set; }
         public int ListenCount { get; set; }
-        public long  Id { get; set; }
+        public string? Id { get; set; }
 
     }
 }

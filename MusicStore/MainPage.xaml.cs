@@ -32,15 +32,12 @@ namespace MusicStore
             Dispatcher.Dispatch(() => carouselView.ScrollTo(currentIndex));
         }
 
-
-      
-        public void BangList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        protected override void OnDisappearing()
         {
-
-
-
+            base.OnDisappearing();
+            timer.Stop();
+            timer.Dispose();
         }
-
     }
 
 }

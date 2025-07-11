@@ -102,27 +102,35 @@ namespace MusicStore.ViewModel
         }
 
         [RelayCommand]
-        async Task BangItemSelectedAsync(KWBangList selectedItem)
-        {
-            Console.WriteLine("selected " + selectedBangItem.Musicrid);
-
+        async Task BangItemSelectedAsync(KWBangList selectedList)
+        {           
             //设置播放列表 和 当前播放歌曲
             //跳转到播放界面
-            MusicPlayerManagerService.Instance.MusicQueue = selectedItem.MusicList.Select(r => new PlayListItem
+            var musicList= selectedList.MusicList.Select(r => new PlayListItem
             {
                 Album = r.Album,
                 Artist = r.Artist,
-                Id = r.Musicrid,
+                Id = r.Rid,
                 Name = r.Name,
                 Pic = r.Pic,
                 Duration = r.Duration
             }).ToList();
 
-            MusicPlayerManagerService.Instance.CurrentMusicInfo = new PlayListItem
+            CurrentMusicQueue = new ObservableCollection<PlayListItem>(musicList);
+            MusicPlayerManagerService.Instance.MusicQueue = musicList;
+
+            CurrentPlayList = new PlayList
+            {
+                Name = selectedList.Name,
+                Id = selectedList.Id,
+                Pic = selectedList.Pic
+            };
+
+            CurrentMusicInfo = new PlayListItem
             {
                 Album = selectedBangItem.Album,
                 Artist = selectedBangItem.Artist,
-                Id = selectedBangItem.Musicrid,
+                Id = selectedBangItem.Rid,
                 Name = selectedBangItem.Name,
                 Pic = selectedBangItem.Pic,
                 Duration = selectedBangItem.Duration

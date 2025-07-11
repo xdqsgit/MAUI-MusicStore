@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicStore.Views.PlayList"
+             Title="PlayList">
+    <Grid RowDefinitions="*,Auto" BackgroundColor="BlueViolet">
+
+        <ScrollView Background="White">
+            <VerticalStackLayout>
+                <Label Text="PlayList" FontSize="30" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <BoxView HeightRequest="800" Color="Turquoise" VerticalOptions="Center"/>
+                <BoxView HeightRequest="80" Color="BurlyWood" VerticalOptions="End"/>
+                <Label Text="test"></Label>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <Grid Grid.Row="1" >
+            <VerticalStackLayout BackgroundColor="Gold" >
+                <FlexLayout BackgroundColor="Brown"
+                            HeightRequest="40" 
+                            JustifyContent="SpaceAround"                            
+                            IsVisible="True"
+                            >
+                    <Label Text="底部"/>
+
+                    <BoxView Color="DarkGoldenrod" FlexLayout.Grow="1" HeightRequest="20" />
+                    <Label Text="底部"/>
+
+                </FlexLayout>
+                <Label Text="底部"/>
+                <BoxView Color="RoyalBlue" HeightRequest="40" />
+                <Label Text="底部"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

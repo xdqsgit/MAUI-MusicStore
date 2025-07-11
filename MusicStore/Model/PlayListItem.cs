@@ -13,6 +13,6 @@ namespace MusicStore.Model
         public string? Album { get; set; }
         public string? Pic { get; set; }
         public double Duration { get; set; }
-        public string? Id { get; set; }
+        public int Id { get; set; }
     }
 }

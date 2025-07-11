@@ -48,6 +48,9 @@ namespace MusicStore
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MusicPalyVM>();
 
+            //Â·ÓÉ×¢²á
+            Routing.RegisterRoute(nameof(MusicPlay), typeof(MusicPlay));
+
             return builder.Build();
         }
     }

@@ -164,6 +164,9 @@
 	   <MauiXaml Update="Views\MusicPlay.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>
+	   <MauiXaml Update="Views\PlayList.xaml">
+	     <Generator>MSBuild:Compile</Generator>
+	   </MauiXaml>
 	   <MauiXaml Update="Views\PlayListDetail.xaml">
 	     <Generator>MSBuild:Compile</Generator>
 	   </MauiXaml>

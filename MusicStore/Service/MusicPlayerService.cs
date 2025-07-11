@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Maui.Views;
-using MusicStore.Model;
+﻿using MusicStore.Model;
 using Plugin.Maui.Audio;
 
 namespace MusicStore.Service
@@ -29,18 +21,12 @@ namespace MusicStore.Service
 
         public int CurrentMusicIndex { get;  set; }
         /// <summary>
-        /// 歌单信息
-        /// </summary>
-        public PlayList PlayList{ get; set; }
-        /// <summary>
-        /// 歌曲列表
-        /// </summary>
-        public List<PlayListItem> PlayListItems { get;  set; }
-        /// <summary>
         /// 当前歌词
         /// </summary>
         public List<Lyric>? CurrentLyrics { get;  set; }
+        public PlayList? CurrentPlayList{ get;  set; }
         public PlayListItem? CurrentMusicInfo { get;  set; }
         public List<PlayListItem>? MusicQueue { get;  set; }
+        public bool IsPlaying { get; set; }
     }
 }

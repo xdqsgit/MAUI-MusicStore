@@ -31,34 +31,33 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="#AF5EAE5E" StatusBarStyle="LightContent" />
     </ContentPage.Behaviors>
-    <AbsoluteLayout>
-        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <VerticalStackLayout
-            BackgroundColor="#C4C4C4CC"
-            Padding="10,15"
-            Spacing="20">
-                <VerticalStackLayout.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#fff" Offset="0.1" />
-                        <GradientStop Color="#ccc" Offset="1.0" />
-                    </LinearGradientBrush>
-                </VerticalStackLayout.Background>
-                <Grid ColumnDefinitions="10,*,10" ColumnSpacing="12" RowDefinitions="35" >
-                    <Button Text="三" Background="Transparent" TextColor="Black" WidthRequest="50" HeightRequest="50" Command="{Binding ShowShellCommand}" />
-                    <Border Grid.Column="1" Style="{StaticResource searchBarStyle}" VerticalOptions="End" >
-                        <SearchBar x:Name="search"
+    <Grid RowDefinitions="45,*,Auto">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#1F1FF05E" Offset="0.1" />
+                <GradientStop Color="#1115105E" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid ColumnDefinitions="10,*,10" ColumnSpacing="12" RowDefinitions="35"
+              BackgroundColor="Transparent" Padding="5" >
+            <Button Text="三" Background="Transparent" TextColor="Black" WidthRequest="50" HeightRequest="50" Command="{Binding ShowShellCommand}" />
+            <Border Grid.Column="1" Style="{StaticResource searchBarStyle}" VerticalOptions="End" >
+                <SearchBar x:Name="search"
                                Placeholder="Search items..."  
                                HeightRequest="35" 
                                Margin="0,-5" 
                                SearchCommand="{Binding SearchCommand}"
                                SearchCommandParameter="{Binding Text,x:DataType='SearchBar',Source={x:Reference search}}"
                                />
-                    </Border>
-                    <Button Grid.Column="2" Text="🎵"  Background="Transparent" 
+            </Border>
+            <Button Grid.Column="2" Text="🎵"  Background="Transparent" 
                         HeightRequest="50"
                         WidthRequest="50"/>
-                </Grid>
+        </Grid>
 
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="10,15" Spacing="20">
                 <ListView x:Name="searchResults" IsVisible="{Binding IsSearchResultVisible}"
                   ItemsSource="{Binding SearchResult}">
                     <ListView.ItemTemplate>
@@ -70,26 +69,29 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <!--banner-->
-
                 <CarouselView x:Name="carouselView" ItemsSource="{Binding BannerList}"
-                                  PeekAreaInsets="35"
-                                  Shadow="#ccc 4 4" 
-                                  HeightRequest="240">
+                              PeekAreaInsets="35"
+                              Shadow="#ccc 4 4" 
+                              HeightRequest="250">
                     <CarouselView.ItemTemplate>
                         <DataTemplate x:DataType="kw:BannerInfo">
-                            <VerticalStackLayout >
+                            <Grid Padding="10" >
                                 <Image Source="{Binding NewPic}"
-                                               Aspect="AspectFit"
-                                               HeightRequest="220"
+                                               Aspect="AspectFill"
+                                       
                                            />
                                 <Label HorizontalOptions="Center"
-                                           Text="{Binding NewPicText}"                                           
+                                       Text="{Binding NewPicText}"  
+                                       Background="#d1d1d1d1"
+                                       Padding="5"
+                                       Shadow="#111 4 4"
+                                       VerticalOptions="End"
                                            />
-                            </VerticalStackLayout>
+                            </Grid>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
-                <FlexLayout JustifyContent="SpaceBetween" Background="#fff" Padding="10,10" Margin="0,-20" >
+                <FlexLayout JustifyContent="SpaceBetween" Background="AliceBlue" Padding="10,10" Margin="0,-20" >
                     <c:FeatureView Title="每日推荐" TextOnImage="{Binding DayOfMonth }" ImageSource="calendar.png" />
                     <c:FeatureView Title="歌单" ImageSource="playlist.png" />
                     <c:FeatureView Title="悦享时刻" ImageSource="playlist.png" />
@@ -103,8 +105,9 @@
                                       Orientation="Horizontal" 
                                       ItemSize="104"
                                       HeightRequest="150"
+                                       HorizontalOptions="Center"
                                        ItemSpacing="10">
-                    <sfListView:SfListView.ItemTemplate>
+                    <sfListView:SfListView.ItemTemplate >
                         <DataTemplate x:DataType="kw:RcmPlayListItem">
 
                             <Grid RowSpacing="5">
@@ -151,8 +154,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="kw:KWBangList">
                                 <Border StrokeShape="RoundRectangle 4"
-                                        Margin="0,0,5,0"
-                                        BackgroundColor="#eee"
+                                        Margin="0,0,5,0"                                         
                                         WidthRequest="180"
                                         >
                                     <VerticalStackLayout>
@@ -182,13 +184,16 @@
                                                                    Aspect="AspectFill"
                                                                    HeightRequest="40"
                                                                    WidthRequest="40" />
+
                                                         <Label Grid.Column="1"
+                                                                   Text="{Binding Name}" 
+                                                               LineBreakMode="TailTruncation"
+                                                               MaxLines="2"
+                                                                   VerticalOptions="End" />
+                                                        <Label Grid.Column="1" Grid.Row="1"
+                                                               TextColor="#666"
                                                                    Text="{Binding Artist}"
                                                                    />
-                                                        <Label Grid.Row="1"
-                                                                   Grid.Column="1"
-                                                                   Text="{Binding Name}"
-                                                                   VerticalOptions="End" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </CollectionView.ItemTemplate>
@@ -200,66 +205,57 @@
                     </FlexLayout>
                 </ScrollView>
                 <!--底部-->
-                <StackLayout HeightRequest="155">
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="~到底咯!" />
-                </StackLayout>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="~到底咯!" />
             </VerticalStackLayout>
         </ScrollView>
         <!--底部导航条-->
-        <VerticalStackLayout AbsoluteLayout.LayoutBounds="1,1,1,160"
-                             AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
-                             >
-            <AbsoluteLayout>
-                <cards:SfCardView CornerRadius="10,10,0,0"
-                                  AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
-                                  AbsoluteLayout.LayoutBounds="0,1,1,60"
-                                  Shadow="#000 4 4"
-                                  BackgroundColor="#f5f5f5" >
-                </cards:SfCardView>
+        <Grid Grid.Row="2" >
+            <VerticalStackLayout>
                 <!--当前播放歌曲-->
-                <FlexLayout AbsoluteLayout.LayoutFlags="WidthProportional"
-                            AbsoluteLayout.LayoutBounds="0,1,1,80"
-                            Padding="10" 
+                    <FlexLayout Padding="10" 
                             AlignItems="Center"
-                            JustifyContent="Start">
-
-                    <Border HeightRequest="60" 
-                            WidthRequest="60"
-                            StrokeShape="RoundRectangle 80,80,80,80"
-                            HorizontalOptions="Center"                    
-                            StrokeThickness="10"
-                            Stroke="Black"
-                            Padding="0"
-                            Margin="0,0,0,0">
-
-                        <Image Aspect="AspectFit"
-                               Source="avatar.png"
-                               HeightRequest="40"
-                               WidthRequest="40"                               
-                               />
-                    </Border>
+                            JustifyContent="Start"
+                            Shadow="#ccc 4 4"  
+                                IsVisible="{Binding HasMusic}"
+                            >
+                    <ImageButton Aspect="AspectFill"
+                                 Margin="5,-10,0,0"
+                                 Source="{Binding CurrentMusicInfo.Pic}"
+                                 HeightRequest="80"
+                                 WidthRequest="80"                               
+                                 CornerRadius="40"
+                                 BorderWidth="10"
+                                 BorderColor="#000"   
+                                 Command="{Binding ShowMusicDetailCommand}"
+                                 />
 
                     <VerticalStackLayout FlexLayout.Grow="1" Padding="15">
-                        <Label Text="泸州月" FontSize="16" />
-                        <Label Text="许嵩" FontSize="14" TextColor="#666" />
+                        <Label Text="{Binding CurrentMusicInfo.Name}" FontSize="16" />
+                        <Label Text="{Binding CurrentMusicInfo.Album}" FontSize="14" TextColor="#666" />
                     </VerticalStackLayout>
 
-                    <ImageButton  Source="play.png" 
-                                  WidthRequest="25" 
-                                  HeightRequest="25" 
-                                  Aspect="AspectFit"     
-                                  FlexLayout.AlignSelf="End"
-                                  Background="Transparent"/>
+                    <Button WidthRequest="25" 
+                                HeightRequest="25" 
+                                FlexLayout.AlignSelf="End"
+                                Background="Transparent"
+                                Text="⏸️"
+                                Command="{Binding PlayOrPauseCommand}"
+                                >
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="False">
+                                <Setter Property="Text" Value="▶️"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
                     <ImageButton  Source="music_list.png" 
-                                  Aspect="AspectFit"
-                                  WidthRequest="25" 
-                                  HeightRequest="25" 
-                                  FlexLayout.AlignSelf="End"                                  
-                                  Background="Transparent"/>
+                                      Aspect="AspectFit"
+                                      WidthRequest="25" 
+                                      HeightRequest="25" 
+                                      FlexLayout.AlignSelf="End"                                  
+                                      Background="Transparent"/>
                 </FlexLayout>
-            </AbsoluteLayout>
-            <cards:SfCardView CornerRadius="0" BackgroundColor="#fff" >
-                <FlexLayout JustifyContent="SpaceAround" Padding="0,10">
+                <Line Stroke="#bbb" X2="10000" StrokeThickness="2" />
+                <FlexLayout JustifyContent="SpaceAround" Padding="0,20" >
                     <VerticalStackLayout>
                         <ImageButton Source="home.png" 
                                      WidthRequest="35" 
@@ -276,8 +272,8 @@
                         <Label Text=" 收藏"  Margin="5,-5" />
                     </VerticalStackLayout>
                 </FlexLayout>
-            </cards:SfCardView>
-        </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
 
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

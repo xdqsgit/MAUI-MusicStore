@@ -8,6 +8,8 @@ namespace KWApi
     {
         readonly string CookieUrl = "https://api.ilingku.com/int/v1/kuwo_secret_token?act=pc";
         readonly string ApiUrl = "https://www.kuwo.cn/api/www";
+        readonly string ApiUrlV1 = "https://www.kuwo.cn/api/v1/www";
+        readonly string ApiUrlOpenapiV1 = "https://www.kuwo.cn/openapi/v1/www";
         HttpClient httpClient;
         public KWApIHelper()
         {
@@ -124,9 +126,9 @@ namespace KWApi
         /// 获取歌曲播放地址
         /// </summary>
         /// <returns></returns>
-        public async Task<PlayUrl?> GetPlayUrlAsync(string musicId)
+        public async Task<PlayUrl?> GetPlayUrlAsync(int musicId)
         {
-            var url = $"{ApiUrl}/music/playUrl?mid={musicId}&type=music&httpsStatus=1&reqId=b73681d1-5be0-11f0-b63c-e3b754600bd5&plat=web_www&from=";
+            var url = $"{ApiUrlV1}/music/playUrl?mid={musicId}&type=music&httpsStatus=1&reqId=23b0fcc1-5d6f-11f0-85c9-ef3dc892f9bf&plat=web_www&from=";
             var result = await GetAsync<PlayUrl>(url);
             return result;
         }
@@ -135,9 +137,9 @@ namespace KWApi
         /// 获取歌词
         /// </summary>
         /// <returns></returns>
-        public async Task<KWLrclist?> GetLyricAsync(string musicId)
+        public async Task<KWLrclist?> GetLyricAsync(int musicId)
         {
-            var url = $"https://www.kuwo.cn/openapi/v1/www/lyric/getlyric?musicId={musicId}&httpsStatus=1&reqId=43a32560-5be1-11f0-8c82-a5b4634c4002&plat=web_www&from=";
+            var url = $"{ApiUrlOpenapiV1}/lyric/getlyric?musicId={musicId}&httpsStatus=1&reqId=43a32560-5be1-11f0-8c82-a5b4634c4002&plat=web_www&from=";
             var result = await GetAsync<KWLrclist>(url);
             return result;
         }

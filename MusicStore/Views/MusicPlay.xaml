@@ -3,6 +3,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:datatp="clr-namespace:MusicStore.DataTemplates"
              xmlns:vm="clr-namespace:MusicStore.ViewModels"
+             xmlns:dm="clr-namespace:MusicStore.Model"
              xmlns:cv="clr-namespace:MusicStore.Converter"             
              x:Class="MusicStore.Views.MusicPlay"
              x:DataType="vm:MusicPalyVM"
@@ -13,10 +14,10 @@
     <ContentPage.Resources>
         <cv:SecondToStringConverter x:Key="secondToStringConverter" />
         <DataTemplate x:Key="nowlyric">
-            <Label Text="{Binding Text}" ClassId="{Binding Order}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Text}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
         </DataTemplate>
         <DataTemplate x:Key="lyric">
-            <Label Text="{Binding Text}"  ClassId="{Binding Order}" TextColor="Gray" HorizontalTextAlignment="Center"/>
+            <Label Text="{Binding Text}"  TextColor="Gray" HorizontalTextAlignment="Center"/>
         </DataTemplate>
         <datatp:LyriclistDataTemplateSelector x:Key="lyricDataTemplateSelector"
                                           ValidTemplate="{StaticResource nowlyric}"
@@ -67,27 +68,45 @@
                         StrokeShape="Ellipse"
                         BackgroundColor="White" 
                         Padding="-1">
-                    <Image Source="avatar.png" Aspect="AspectFill" />
+                    <Image Source="{Binding CurrentMusicInfo.Pic}" Aspect="AspectFill" />
                 </Border>
             </Border>
 
             <!-- 歌词区域 -->
-            <ScrollView x:Name="LyricScrollView"  
-                        Grid.Row="2" 
-                        Grid.Column="1" 
-                        VerticalScrollBarVisibility="Never" 
-                        Orientation="Vertical" 
-                        Background="AliceBlue"  >
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentLyrics}"
-                                     BindableLayout.ItemTemplateSelector="{StaticResource lyricDataTemplateSelector}"  
-                                     >
-                    <BindableLayout.EmptyViewTemplate>
-                        <DataTemplate>
-                            <Label Text="暂无歌词" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </DataTemplate>
-                    </BindableLayout.EmptyViewTemplate>
-                </VerticalStackLayout>
-            </ScrollView>
+
+            <CollectionView x:Name="LyricCollectionView" 
+                            Grid.Row="2" 
+                            Grid.Column="1" 
+                            VerticalScrollBarVisibility="Never" 
+                            ItemsSource="{Binding CurrentLyrics}"
+                            SelectedItem="{Binding CurrentLyric}"
+                            SelectionMode="Single"
+                            SelectionChanged="LyricCollectionView_SelectionChanged"
+                            >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dm:Lyric">
+                        <Label Text="{Binding Text}" 
+                                   FontSize="14" 
+                                   TextColor="Gray" 
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   Padding="5"
+                                   >
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Value="{Binding Order}" Binding="{Binding CurrentLyric.Order ,Source={RelativeSource AncestorType={x:Type vm:MusicPalyVM}} }">
+                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                    <Setter Property="TextColor" Value="Black"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <Label Text="暂无歌词" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+            </CollectionView>
         </Grid>
 
         <!-- 底部控制栏 -->
@@ -128,7 +147,7 @@
                 <Border Grid.Column="1" Background="#ddd" StrokeShape="Ellipse" HeightRequest="65" WidthRequest="65">
 
                     <Button x:Name="PlayPauseButton"
-                            Text="▶️"
+                            Text="⏸️"
                             WidthRequest="50" 
                             HeightRequest="50"                             
                             BackgroundColor="White" 
@@ -137,7 +156,7 @@
                             >
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="False">
-                                <Setter Property="Text" Value="⏸️"/>
+                                <Setter Property="Text" Value="▶️"/>
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>
