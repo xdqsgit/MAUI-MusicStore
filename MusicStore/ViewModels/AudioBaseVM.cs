@@ -115,6 +115,12 @@ namespace MusicStore.ViewModels
             {
                 UpdateCurrentPositionAsync();
             }
+            //todo: 订阅播放完毕事件
+            audioPlayer.PlaybackEnded += (s, e) =>
+            {
+                IsPlaying = false;
+                //PlayNextMusic();
+            };
         }
 
         async Task<Stream?> LoadFromUrlAsync(string url)
@@ -262,7 +268,14 @@ namespace MusicStore.ViewModels
                     stream = await LoadFromUrlAsync(playInfo.Url ?? "");
                 }
             }
-            audioPlayer.SetSource(stream ?? new MemoryStream());
+            if (stream == null)
+            {
+                return;
+            }
+            else
+            {
+                audioPlayer.SetSource(stream ?? new MemoryStream());
+            }
         }
         protected async void UpdateCurrentPositionAsync()
         {
